@@ -2,7 +2,8 @@ let cropper;
 let newsList = JSON.parse(localStorage.getItem('neti_hd_news')) || [];
 let currentUser = null;
 
-// GMAIL IDs correct ga undali
+const categories = ["Politics", "Sports", "Crime", "Local", "Health", "Cinema"];
+
 const users = {
     "hannu@gmail.com": { role: "Admin", pass: "6301505699" },
     "masoodv6.in@gmail.com": { role: "Admin", pass: "hannu6301505699" },
@@ -12,37 +13,33 @@ const users = {
 function handleLogin() {
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const pass = document.getElementById('loginPass').value.trim();
-    
-    // Debugging: typing mistake unte check cheyadanki
-    if (email.includes("gamil.com")) {
-        alert("Typo detected! Please use @gmail.com (not @gamil.com)");
-        return;
-    }
+    const user = users[email];
 
-    const foundUser = users[email];
-
-    if (foundUser && foundUser.pass === pass) {
-        currentUser = { role: foundUser.role, email: email };
+    if (user && user.pass === pass) {
+        currentUser = user;
         document.getElementById('userLinks').classList.replace('d-none', 'd-flex');
         document.getElementById('authLinks').classList.add('d-none');
-        document.getElementById('userNameDisplay').innerText = foundUser.role;
+        document.getElementById('userNameDisplay').innerText = user.role;
         
-        if (foundUser.role === "Admin" || foundUser.role === "Reporter") {
+        if (user.role === "Admin" || user.role === "Reporter") {
             document.getElementById('upload-section').classList.remove('d-none');
+            setupCategories();
         }
-        
-        const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-        if(modal) modal.hide();
+        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
         document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     } else {
-        alert("Access Denied! Gmail leda Password tappu.");
+        alert("Invalid Credentials!");
     }
 }
 
-// Image, Crop & Save logic remains same...
-document.getElementById('fileInput').onchange = function(e) {
+function setupCategories() {
+    const el = document.getElementById('newsCat');
+    el.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
+document.getElementById('fileInput').onchange = (e) => {
     const reader = new FileReader();
-    reader.onload = function(event) {
+    reader.onload = (event) => {
         const img = document.getElementById('cropImage');
         img.src = event.target.result;
         if (cropper) cropper.destroy();
@@ -52,29 +49,26 @@ document.getElementById('fileInput').onchange = function(e) {
 };
 
 function startCrop() {
-    if (!cropper) return alert("Select image first!");
-    const canvas = cropper.getCroppedCanvas({ width: 1200 });
-    window.tempImg = canvas.toDataURL('image/jpeg', 0.9);
-    alert("HD Image Ready!");
+    if (!cropper) return alert("Select image!");
+    window.tempImg = cropper.getCroppedCanvas({ width: 1200 }).toDataURL('image/jpeg', 0.9);
+    alert("HD Ready!");
 }
 
 function saveNews() {
     const title = document.getElementById('newsTitle').value;
-    if (!window.tempImg || !title) return alert("Title and Crop are required!");
-
-    const article = {
+    if (!window.tempImg || !title) return alert("Required fields missing!");
+    
+    newsList.unshift({
         id: Date.now(),
-        title: title,
+        title,
         cat: document.getElementById('newsCat').value,
         img: window.tempImg,
         author: currentUser.role,
         date: new Date().toLocaleDateString()
-    };
-
-    newsList.unshift(article);
+    });
     localStorage.setItem('neti_hd_news', JSON.stringify(newsList));
     renderNews();
-    alert("News Published!");
+    alert("Published!");
 }
 
 function renderNews() {
