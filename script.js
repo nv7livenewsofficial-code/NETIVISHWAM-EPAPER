@@ -2,124 +2,115 @@ let cropper;
 let currentUser = null;
 let newsList = JSON.parse(localStorage.getItem('neti_hd_news')) || [];
 
-// 1. Auth Logic - Fixed Modal Handling
-function handleLogin() {
-    const u = document.getElementById('user').value;
-    const p = document.getElementById('pass').value;
+// 1. AUTHORIZED USER LIST
+const users = {
+    "hannu@gmail.com": { role: "Admin", pass: "hannu6301505699" },
+    "reporter@gmail.com": { role: "Reporter", pass: "nv7livenews" },
+    "user@gmail.com": { role: "User", pass: "user123" }
+};
 
-    if (u === 'hannu' && p === 'hannu6301505699') {
-        login('Admin');
-    } else if (u === 'hannu' && p === 'nv7livenews') {
-        login('Reporter');
+// 2. AUTH LOGIC
+function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const pass = document.getElementById('loginPass').value.trim();
+
+    const foundUser = users[email];
+
+    if (foundUser && foundUser.pass === pass) {
+        processLogin(foundUser.role, email);
     } else {
-        alert("Invalid Username or Password!");
+        alert("Access Denied! Gmail leda Password tappu.");
     }
 }
 
-function login(role) {
-    currentUser = role;
+function processLogin(role, email) {
+    currentUser = { role, email };
     
-    // UI elements update
+    // UI Setup
     document.getElementById('userLinks').classList.replace('d-none', 'd-flex');
     document.getElementById('authLinks').classList.add('d-none');
-    document.getElementById('userName').innerText = "Hello, " + role;
-    document.getElementById('upload-section').classList.remove('d-none');
+    document.getElementById('userNameDisplay').innerText = `${role} (${email})`;
 
-    // Modal ni close chese correct paddhati
-    const modalElement = document.getElementById('loginModal');
-    const modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-    modalInstance.hide();
-    
-    // Check if backdrop remains
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop) backdrop.remove();
-    document.body.style.overflow = 'auto';
+    // Panel Visibility Logic
+    if (role === "Admin" || role === "Reporter") {
+        document.getElementById('upload-section').classList.remove('d-none');
+        document.getElementById('panelTitle').innerText = role + " Dashboard";
+    } else {
+        document.getElementById('upload-section').classList.add('d-none');
+        alert("Welcome User! Meeru news chadavachu.");
+    }
+
+    // Modal Hide
+    const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+    if(modal) modal.hide();
 }
 
-// 2. Image Cropping Logic - Fixed preview and destruction
+// 3. IMAGE CROPPING (HD)
 document.getElementById('fileInput').onchange = function(e) {
     const reader = new FileReader();
     reader.onload = function(event) {
         const img = document.getElementById('cropImage');
         img.src = event.target.result;
-        
-        if (cropper) {
-            cropper.destroy();
-        }
-        
-        // Timeout ensures image is loaded before cropper starts
+        if (cropper) cropper.destroy();
         setTimeout(() => {
-            cropper = new Cropper(img, {
-                aspectRatio: NaN,
-                viewMode: 1,
-                autoCropArea: 1
-            });
-        }, 100);
+            cropper = new Cropper(img, { aspectRatio: NaN, viewMode: 1 });
+        }, 200);
     };
     reader.readAsDataURL(e.target.files[0]);
 };
 
 function startCrop() {
-    if (!cropper) return alert("Please select an image first!");
-    
-    const canvas = cropper.getCroppedCanvas({ width: 1200 }); // HD Quality
-    const croppedUrl = canvas.toDataURL('image/jpeg', 0.9);
-    window.tempImg = croppedUrl;
-    
-    // Preview image update after crop (Optional but helpful)
-    document.getElementById('cropImage').src = croppedUrl;
-    alert("Image Cropped Successfully! Now fill details and Publish.");
+    if (!cropper) return alert("Select an image first!");
+    const canvas = cropper.getCroppedCanvas({ width: 1200 }); // High Quality
+    window.tempImg = canvas.toDataURL('image/jpeg', 0.9);
+    alert("Image Cropped! Fill details and Publish.");
 }
 
-// 3. Save News - Fixed data persistence
+// 4. PUBLISH NEWS
 function saveNews() {
     const title = document.getElementById('newsTitle').value;
-    const cat = document.getElementById('newsCat').value;
-    
-    if (!window.tempImg) return alert("Please crop the image first!");
-    if (!title) return alert("Please enter a Title!");
+    if (!window.tempImg || !title) return alert("Title and Cropped Image are required!");
 
     const article = {
         id: Date.now(),
         title: title,
-        cat: cat,
+        cat: document.getElementById('newsCat').value,
         img: window.tempImg,
-        author: currentUser,
+        author: currentUser.role,
+        email: currentUser.email,
         date: new Date().toLocaleDateString()
     };
 
     newsList.unshift(article);
     localStorage.setItem('neti_hd_news', JSON.stringify(newsList));
     
-    // Reset inputs
     document.getElementById('newsTitle').value = "";
     window.tempImg = null;
     
-    renderAll();
-    alert("Success! News Published in HD.");
+    renderNews();
+    alert("Published Successfully!");
 }
 
-// 4. Render & Share
-function renderAll() {
+// 5. RENDER NEWS
+function renderNews() {
     const grid = document.getElementById('news-grid');
     if (!grid) return;
 
     if (newsList.length === 0) {
-        grid.innerHTML = '<div class="col-12 text-center text-muted"><p>No news articles found.</p></div>';
+        grid.innerHTML = '<p class="text-center text-muted">No news available.</p>';
         return;
     }
 
     grid.innerHTML = newsList.map(n => `
         <div class="col-md-4">
-            <div class="card news-card shadow-sm h-100">
-                <img src="${n.img}" class="card-img-top">
-                <div class="card-body p-3">
-                    <span class="badge bg-primary mb-2">${n.cat}</span>
-                    <h6 class="fw-bold mb-1">${n.title}</h6>
-                    <small class="text-muted d-block mb-3">By ${n.author} | ${n.date || ''}</small>
+            <div class="news-card">
+                <img src="${n.img}">
+                <div class="p-3">
+                    <span class="badge bg-primary badge-cat mb-2">${n.cat}</span>
+                    <h6 class="fw-bold">${n.title}</h6>
+                    <p class="small text-muted mb-3">By ${n.author} (${n.email})</p>
                     <div class="d-flex gap-2">
-                        <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(n.title + " - Read more at Netivishwam")}" target="_blank" class="btn btn-success btn-sm flex-grow-1">WhatsApp</a>
-                        <button class="btn btn-light btn-sm border" onclick="copyLink(${n.id})">Copy Link</button>
+                        <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(n.title)}" target="_blank" class="btn btn-success btn-sm flex-grow-1">Share</a>
                     </div>
                 </div>
             </div>
@@ -127,23 +118,8 @@ function renderAll() {
     `).join('');
 }
 
-function copyLink(id) {
-    const url = window.location.origin + window.location.pathname + "?id=" + id;
-    navigator.clipboard.writeText(url).then(() => {
-        alert("Link copied to clipboard!");
-    });
-}
-
 function logout() {
-    currentUser = null;
-    sessionStorage.clear();
     location.reload();
 }
 
-// Modal management for the Login button
-function openLogin() {
-    const myModal = new bootstrap.Modal(document.getElementById('loginModal'));
-    myModal.show();
-}
-
-window.onload = renderAll;
+window.onload = renderNews;
