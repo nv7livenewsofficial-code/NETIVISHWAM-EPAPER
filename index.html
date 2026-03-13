@@ -10,40 +10,40 @@
 </head>
 <body>
 
-    <header class="epaper-header text-center">
+    <header class="epaper-header">
         <h1 class="logo-text">NETIVISHWAM</h1>
     </header>
 
     <nav class="user-toolbar shadow-sm">
-        <div class="tool-item" onclick="startCrop()">
+        <div class="tool-action" onclick="initCrop()">
             <span class="icon">✂️</span><br>CROP
         </div>
-        <div class="tool-item" onclick="downloadHD()">
+        <div class="tool-action" onclick="saveHD()">
             <span class="icon">💾</span><br>SAVE HD
         </div>
-        <div class="tool-item" onclick="shareWhatsApp()">
+        <div class="tool-action" onclick="shareWA()">
             <span class="icon">📲</span><br>SHARE
         </div>
-        <div class="tool-item" onclick="likePost()">
-            <span class="icon">👍</span><br><span id="like-count">0</span>
+        <div class="tool-action" onclick="updateReaction()">
+            <span class="icon">👍</span><br><span id="count">0</span>
         </div>
     </nav>
 
-    <div id="admin-panel" class="admin-controls d-none">
-        <button class="btn btn-warning btn-sm fw-bold" onclick="document.getElementById('fileInput').click()">UPLOAD PAGE</button>
-        <button class="btn btn-light btn-sm fw-bold" onclick="initMapping()">MAP 10 NEWS AREAS</button>
-        <input type="file" id="fileInput" class="d-none" accept="image/*">
+    <div id="admin-panel" class="admin-bar d-none">
+        <button class="btn btn-warning btn-sm fw-bold" onclick="document.getElementById('fileIn').click()">UPLOAD PAGE</button>
+        <button class="btn btn-light btn-sm fw-bold" onclick="mapAreas()">MAP 10 NEWS AREAS</button>
+        <input type="file" id="fileIn" class="d-none" accept="image/*">
     </div>
 
-    <main class="viewer-container">
-        <div class="paper-wrapper" id="canvas-wrapper">
-            <img id="epaper-image" src="placeholder.jpg" alt="Daily News">
+    <main class="main-viewer">
+        <div class="canvas-box" id="wrapper">
+            <img id="paper-img" src="placeholder.jpg">
             <div id="mapping-layer"></div>
         </div>
     </main>
 
-    <footer class="footer-login text-center">
-        <button class="btn btn-link btn-sm text-secondary text-decoration-none" onclick="adminLogin()">Admin Login</button>
+    <footer class="footer-area">
+        <button class="btn btn-link btn-sm text-secondary" onclick="handleAuth()">Admin Login</button>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
