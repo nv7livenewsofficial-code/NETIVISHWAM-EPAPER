@@ -2,7 +2,7 @@ let cropper;
 let newsList = JSON.parse(localStorage.getItem('neti_hd_news')) || [];
 let currentUser = null;
 
-const categories = ["Politics", "Sports", "Crime", "Local", "Health", "Cinema"];
+const categories = ["Andhra Pradesh", "Telangana", "Hyderabad", "District Editions", "National"];
 
 const users = {
     "hannu@gmail.com": { role: "Admin", pass: "6301505699" },
@@ -25,17 +25,16 @@ function handleLogin() {
             document.getElementById('upload-section').classList.remove('d-none');
             setupCategories();
         }
-        renderNews(); // Admin login ayyaka delete buttons kanipinchadaniki
+        renderNews();
         bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
-        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     } else {
-        alert("Invalid Credentials!");
+        alert("Access Denied! Gmail leda Password tappu.");
     }
 }
 
 function setupCategories() {
     const el = document.getElementById('newsCat');
-    if(el) el.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    el.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
 }
 
 document.getElementById('fileInput').onchange = (e) => {
@@ -44,7 +43,7 @@ document.getElementById('fileInput').onchange = (e) => {
         const img = document.getElementById('cropImage');
         img.src = event.target.result;
         if (cropper) cropper.destroy();
-        setTimeout(() => { cropper = new Cropper(img, { aspectRatio: NaN, viewMode: 1 }); }, 200);
+        setTimeout(() => { cropper = new Cropper(img, { aspectRatio: 3/4, viewMode: 1 }); }, 200);
     };
     reader.readAsDataURL(e.target.files[0]);
 };
@@ -52,29 +51,26 @@ document.getElementById('fileInput').onchange = (e) => {
 function startCrop() {
     if (!cropper) return alert("Select image!");
     window.tempImg = cropper.getCroppedCanvas({ width: 1200 }).toDataURL('image/jpeg', 0.9);
-    alert("HD Ready!");
+    alert("HD Thumbnail Ready!");
 }
 
 function saveNews() {
     const title = document.getElementById('newsTitle').value;
-    if (!window.tempImg || !title) return alert("Required fields missing!");
+    if (!window.tempImg || !title) return alert("All fields are required!");
     
     newsList.unshift({
         id: Date.now(),
         title,
         cat: document.getElementById('newsCat').value,
-        img: window.tempImg,
-        author: currentUser ? currentUser.role : "System",
-        date: new Date().toLocaleDateString()
+        img: window.tempImg
     });
     localStorage.setItem('neti_hd_news', JSON.stringify(newsList));
     renderNews();
-    alert("Published!");
+    alert("Edition Published!");
 }
 
-// DELETE OPTION LOGIC
 function deleteNews(id) {
-    if(confirm("Are you sure you want to delete this news?")) {
+    if(confirm("Delete this edition?")) {
         newsList = newsList.filter(n => n.id !== id);
         localStorage.setItem('neti_hd_news', JSON.stringify(newsList));
         renderNews();
@@ -85,15 +81,11 @@ function renderNews() {
     const grid = document.getElementById('news-grid');
     if (!grid) return;
     grid.innerHTML = newsList.map(n => `
-        <div class="col-md-4 mb-4">
+        <div class="col-6 col-md-3">
             <div class="news-card">
-                ${currentUser && (currentUser.role === 'Admin') ? `<button class="btn btn-danger btn-delete" onclick="deleteNews(${n.id})">✖</button>` : ''}
-                <div class="card-title-overlay">${n.title}</div>
-                <img src="${n.img}">
-                <div class="p-3">
-                    <span class="badge bg-primary mb-2">${n.cat}</span>
-                    <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(n.title)}" target="_blank" class="btn btn-success btn-sm w-100">WhatsApp Share</a>
-                </div>
+                ${currentUser && currentUser.role === 'Admin' ? `<button class="btn-delete" onclick="deleteNews(${n.id})">✖</button>` : ''}
+                <img src="${n.img}" alt="${n.title}">
+                <div class="card-title-bar">${n.title}</div>
             </div>
         </div>
     `).join('');
