@@ -1,65 +1,60 @@
-let newsCropper;
+let cropper;
 let isAdmin = false;
 let mappedCount = 0;
 
-// Admin Login Logic
-function adminLogin() {
-    const user = prompt("Admin Email:");
+// Admin Auth logic
+function handleAuth() {
+    const email = prompt("Admin Email:");
     const pass = prompt("Password:");
     
-    // Validate Credentials
-    if ((user === "hannu@gmail.com" || user === "masoodv6.in@gmail.com") && 
+    // Check credentials from user data
+    if ((email === "hannu@gmail.com" || email === "masoodv6.in@gmail.com") && 
         (pass === "6301505699" || pass === "hannu6301505699")) {
         isAdmin = true;
         document.getElementById('admin-panel').classList.remove('d-none');
-        alert("Admin Mode: News Area Mapping Enabled.");
+        alert("Admin Mode: Start mapping news areas.");
     } else {
-        alert("User Access Only.");
+        alert("User Mode Active.");
     }
 }
 
-// Logic to Map 10 News Items
-function initMapping() {
+// Logic to map 10 news areas on a single page
+function mapAreas() {
     if (!isAdmin) return;
-    alert("Click on the page to define 10 news areas.");
-    const img = document.getElementById('epaper-image');
+    alert("Click on the image to define 10 news areas.");
+    const img = document.getElementById('paper-img');
     
-    img.onclick = (e) => {
-        if (mappedCount >= 10) return alert("10 News Items Mapped.");
+    img.onclick = function(e) {
+        if (mappedCount >= 10) return alert("10 areas already mapped.");
         
         const rect = img.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
         
-        const box = document.createElement('div');
-        box.className = "mapped-box";
-        box.style.left = x + "%";
-        box.style.top = y + "%";
-        box.style.width = "25%"; // Standard news width
-        box.style.height = "12%"; // Standard news height
+        const zone = document.createElement('div');
+        zone.className = "news-zone";
+        zone.style.left = x + "%";
+        zone.style.top = y + "%";
+        zone.style.width = "25%"; // Default news block width
+        zone.style.height = "12%"; // Default news block height
         
-        document.getElementById('mapping-layer').appendChild(box);
+        document.getElementById('mapping-layer').appendChild(zone);
         mappedCount++;
     };
 }
 
-// User Action: HD Cropping
-function startCrop() {
-    const image = document.getElementById('epaper-image');
-    if (newsCropper) {
-        newsCropper.destroy();
-        newsCropper = null;
-    } else {
-        newsCropper = new Cropper(image, { viewMode: 1, autoCropArea: 0.2 });
-    }
+// HD Crop Logic
+function initCrop() {
+    const img = document.getElementById('paper-img');
+    if (cropper) cropper.destroy();
+    cropper = new Cropper(img, { viewMode: 1, autoCropArea: 0.3 });
 }
 
-function downloadHD() {
-    if (!newsCropper) return alert("Select a news area first!");
+function saveHD() {
+    if (!cropper) return alert("Please use the CROP tool first!");
     
-    // Export in HD Resolution
-    const canvas = newsCropper.getCroppedCanvas({
-        width: 1600,
+    const canvas = cropper.getCroppedCanvas({
+        width: 1600, // HD Resolution
         imageSmoothingQuality: 'high'
     });
     
@@ -69,15 +64,14 @@ function downloadHD() {
     link.click();
 }
 
-// WhatsApp Share
-function shareWhatsApp() {
-    const domain = "nv7news.blogspot.com";
-    const msg = encodeURIComponent("Read Netivishwam News: " + domain);
+function shareWA() {
+    const url = "nv7news.blogspot.com";
+    const msg = encodeURIComponent("Check out today's news: " + url);
     window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
 }
 
-let likes = 0;
-function likePost() {
-    likes++;
-    document.getElementById('like-count').innerText = likes;
+let reactions = 0;
+function updateReaction() {
+    reactions++;
+    document.getElementById('count').innerText = reactions;
 }
