@@ -2,6 +2,7 @@ let cropper;
 let newsList = JSON.parse(localStorage.getItem('neti_hd_news')) || [];
 let currentUser = null;
 
+// GMAIL IDs correct ga undali
 const users = {
     "hannu@gmail.com": { role: "Admin", pass: "6301505699" },
     "masoodv6.in@gmail.com": { role: "Admin", pass: "hannu6301505699" },
@@ -11,6 +12,13 @@ const users = {
 function handleLogin() {
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const pass = document.getElementById('loginPass').value.trim();
+    
+    // Debugging: typing mistake unte check cheyadanki
+    if (email.includes("gamil.com")) {
+        alert("Typo detected! Please use @gmail.com (not @gamil.com)");
+        return;
+    }
+
     const foundUser = users[email];
 
     if (foundUser && foundUser.pass === pass) {
@@ -23,14 +31,15 @@ function handleLogin() {
             document.getElementById('upload-section').classList.remove('d-none');
         }
         
-        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
-        // Clean backdrop
+        const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+        if(modal) modal.hide();
         document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     } else {
         alert("Access Denied! Gmail leda Password tappu.");
     }
 }
 
+// Image, Crop & Save logic remains same...
 document.getElementById('fileInput').onchange = function(e) {
     const reader = new FileReader();
     reader.onload = function(event) {
