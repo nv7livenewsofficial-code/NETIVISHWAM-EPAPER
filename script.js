@@ -1,87 +1,59 @@
-let cropper;
-let nv_data = JSON.parse(localStorage.getItem('nv_editions')) || [];
-let currentUser = null;
+let isMapping = false;
+let mappedAreas = []; // To store 10 news coordinates
 
-const users = {
-    "hannu@gmail.com": "6301505699",
-    "masoodv6.in@gmail.com": "hannu6301505699"
-};
-
+// 1. Role Check (Using your credentials)
 function handleLogin() {
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const pass = document.getElementById('loginPass').value.trim();
-
-    if (users[email] === pass) {
-        currentUser = email;
-        document.getElementById('userLinks').classList.replace('d-none', 'd-flex');
-        document.getElementById('authLinks').classList.add('d-none');
-        bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
-        renderEditions();
+    
+    // Fixed typo from 'gamil' to 'gmail'
+    if ((email === "hannu@gmail.com" && pass === "6301505699") || 
+        (email === "masoodv6.in@gmail.com" && pass === "hannu6301505699")) {
+        
+        document.getElementById('admin-panel').classList.remove('d-none');
+        document.getElementById('admin-name').innerText = email.split('@')[0];
+        alert("Admin Access Granted");
     } else {
-        alert("Access Denied! Gmail ID spelling check cheyyandi (gmail.com).");
+        alert("User Mode: Access Restricted to View/Crop only.");
     }
 }
 
-function showUploadPanel() { document.getElementById('upload-panel').classList.toggle('d-none'); }
-
-document.getElementById('fileInput').onchange = (e) => {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-        document.getElementById('rawPreview').src = event.target.result;
-        document.getElementById('rawPreview').style.display = 'block';
-        document.getElementById('imageToCrop').src = event.target.result;
-        document.getElementById('cropTrigger').style.display = 'block';
-    };
-    reader.readAsDataURL(e.target.files[0]);
-};
-
-// SHARING & TOOLS
-document.getElementById('cropModal').addEventListener('shown.bs.modal', function () {
-    const img = document.getElementById('imageToCrop');
-    if (cropper) cropper.destroy();
-    cropper = new Cropper(img, { aspectRatio: 3/4, viewMode: 1 });
-});
-
-function applyCrop() {
-    window.croppedImg = cropper.getCroppedCanvas({ width: 800 }).toDataURL('image/jpeg');
-    document.getElementById('rawPreview').src = window.croppedImg;
-    document.getElementById('publishBtn').disabled = false;
-    bootstrap.Modal.getInstance(document.getElementById('cropModal')).hide();
+// 2. Area Mapping Logic (Admin only)
+function startMapping() {
+    isMapping = true;
+    alert("Click on the image to mark news areas (Approx 10 items)");
+    // Logic to capture X, Y coordinates on click
 }
 
-function saveEdition() {
-    const name = document.getElementById('editionName').value;
-    nv_data.unshift({ id: Date.now(), name: name, img: window.croppedImg });
-    localStorage.setItem('nv_editions', JSON.stringify(nv_data));
-    renderEditions();
-    alert("Edition Published!");
+// 3. HD Crop & Download (For User)
+function downloadHD() {
+    if (!cropper) return alert("Select area first!");
+    
+    // Capture in high quality
+    const canvas = cropper.getCroppedCanvas({
+        width: 1600, // HD Quality
+        imageSmoothingQuality: 'high'
+    });
+    
+    const link = document.createElement('a');
+    link.download = 'Netivishwam-News.jpg';
+    link.href = canvas.toDataURL('image/jpeg', 1.0);
+    link.click();
 }
 
-function deleteEdition(id) {
-    if(confirm("Delete this?")) {
-        nv_data = nv_data.filter(e => e.id !== id);
-        localStorage.setItem('nv_editions', JSON.stringify(nv_data));
-        renderEditions();
+// 4. Like/Dislike Counter
+let likes = 0;
+function react(type) {
+    if (type === 'like') {
+        likes++;
+        document.getElementById('like-count').innerText = likes;
     }
+    // Update to database logic can be added here
 }
 
-function renderEditions() {
-    const grid = document.getElementById('edition-grid');
-    grid.innerHTML = nv_data.map(e => `
-        <div class="col-6 col-md-3">
-            <div class="edition-card shadow-sm">
-                ${currentUser ? `<button class="btn-delete" onclick="deleteEdition(${e.id})">✖</button>` : ''}
-                <img src="${e.img}" onclick="window.open('${e.img}', '_blank')">
-                <div class="title-bar">${e.name}</div>
-                <button class="btn btn-success btn-sm w-100 mt-2" onclick="share('${e.name}')">WhatsApp Share</button>
-            </div>
-        </div>
-    `).join('');
-}
-
-function share(name) {
-    const text = encodeURIComponent(`Check out ${name} Edition on Netivishwam: https://nv7news.blogspot.com`);
+// 5. Sharing Logic
+function shareToWA() {
+    const domain = "nv7news.blogspot.com";
+    const text = encodeURIComponent(`Read this news on Netivishwam: ${domain}`);
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 }
-
-window.onload = renderEditions;
