@@ -12,12 +12,15 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#" onclick="location.reload()">NETIVISHWAM <span class="text-primary">EPAPER</span></a>
+            <a class="navbar-brand fw-bold" href="index.html">🏠 NETIVISHWAM</a>
+            
             <div id="authLinks">
                 <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
             </div>
+
             <div id="userLinks" class="d-none align-items-center">
                 <span id="userNameDisplay" class="text-white me-3 small fw-bold"></span>
+                <button class="btn btn-warning btn-sm me-2" onclick="location.reload()">Back</button>
                 <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -26,7 +29,10 @@
     <div class="container mt-4">
         <div id="upload-section" class="d-none mb-5">
             <div class="card shadow border-0">
-                <div class="card-header bg-primary text-white"><h5>Publish News</h5></div>
+                <div class="card-header bg-primary text-white d-flex justify-content-between">
+                    <h5 class="mb-0">Publish News</h5>
+                    <button class="btn btn-light btn-sm" onclick="location.reload()">Close Panel</button>
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-7 border-end">
@@ -54,14 +60,14 @@
 
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
-            <div class="modal-content shadow-lg">
-                <div class="modal-header border-0">
-                    <h5 class="modal-title fw-bold">Sign In</h5>
+            <div class="modal-content shadow-lg border-0">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Member Sign In</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-start">
                     <label class="small fw-bold">Gmail ID</label>
-                    <input type="email" id="loginEmail" class="form-control mb-3" placeholder="example@gmail.com">
+                    <input type="email" id="loginEmail" class="form-control mb-3" placeholder="masoodv6.in@gmail.com">
                     <label class="small fw-bold">Password</label>
                     <input type="password" id="loginPass" class="form-control mb-3" placeholder="Password">
                     <button class="btn btn-primary w-100 fw-bold" onclick="handleLogin()">Login</button>
