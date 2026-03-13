@@ -1,50 +1,125 @@
 :root {
     --sakshi-yellow: #fdd835;
     --sakshi-blue: #0d47a1;
+    --dark-bg: #1a1a1a;
 }
 
-body { background-color: #f4f7f6; font-family: sans-serif; }
+body {
+    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+}
 
-.epaper-header { background-color: var(--sakshi-yellow); border-bottom: 5px solid var(--sakshi-blue); }
-.logo-text { font-size: 2.5rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
-.edition-title { color: var(--sakshi-blue); font-weight: bold; font-size: 1rem; letter-spacing: 1px; }
+/* Sakshi Style Header */
+.epaper-header {
+    background-color: var(--sakshi-yellow);
+    border-bottom: 4px solid var(--sakshi-blue);
+    padding: 15px 0;
+}
 
-/* Sakshi Card Style */
+.logo-text {
+    font-size: 2.5rem;
+    color: var(--sakshi-blue);
+    font-weight: 900;
+    margin: 0;
+    text-align: center;
+}
+
+/* Image Tool Bar (Top Side - As requested) */
+.tool-bar {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 15px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.tool-item {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #444;
+    transition: 0.2s;
+}
+
+.tool-item:hover { color: var(--sakshi-blue); }
+
+.tool-icon {
+    font-size: 20px;
+    margin-bottom: 2px;
+}
+
+/* Cropping Container */
+.main-view-container {
+    background: #e4e4e4;
+    padding: 20px;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+}
+
+.image-canvas-box {
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    max-width: 900px;
+    width: 100%;
+    position: relative;
+}
+
+#imageToCrop {
+    max-width: 100%;
+    display: block;
+}
+
+/* Card Grid for Editions */
+.edition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
 .edition-card {
     background: #fff;
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: center;
     position: relative;
-    height: 100%;
 }
 
 .edition-card img {
     width: 100%;
-    aspect-ratio: 3 / 4; /* Vertical Sakshi Ratio */
+    aspect-ratio: 3 / 4;
     object-fit: cover;
-    border: 1px solid #eee;
-    cursor: pointer;
 }
 
-.title-bar {
-    background: var(--sakshi-yellow);
-    color: var(--sakshi-blue);
-    padding: 8px;
-    font-weight: bold;
-    margin-top: 10px;
-    font-size: 0.9rem;
-}
-
-.btn-delete {
+/* Admin Delete Button */
+.delete-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
-    background: red;
+    top: 5px;
+    right: 5px;
+    background: #ff4d4d;
     color: white;
     border: none;
     border-radius: 50%;
-    width: 26px;
-    height: 26px;
-    z-index: 5;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* WhatsApp Share Button on Card */
+.share-btn {
+    background: #25D366;
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 12px;
 }
