@@ -25,6 +25,7 @@ function handleLogin() {
             document.getElementById('upload-section').classList.remove('d-none');
             setupCategories();
         }
+        renderNews(); // Admin login ayyaka delete buttons kanipinchadaniki
         bootstrap.Modal.getInstance(document.getElementById('loginModal')).hide();
         document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
     } else {
@@ -34,7 +35,7 @@ function handleLogin() {
 
 function setupCategories() {
     const el = document.getElementById('newsCat');
-    el.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+    if(el) el.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
 }
 
 document.getElementById('fileInput').onchange = (e) => {
@@ -63,12 +64,21 @@ function saveNews() {
         title,
         cat: document.getElementById('newsCat').value,
         img: window.tempImg,
-        author: currentUser.role,
+        author: currentUser ? currentUser.role : "System",
         date: new Date().toLocaleDateString()
     });
     localStorage.setItem('neti_hd_news', JSON.stringify(newsList));
     renderNews();
     alert("Published!");
+}
+
+// DELETE OPTION LOGIC
+function deleteNews(id) {
+    if(confirm("Are you sure you want to delete this news?")) {
+        newsList = newsList.filter(n => n.id !== id);
+        localStorage.setItem('neti_hd_news', JSON.stringify(newsList));
+        renderNews();
+    }
 }
 
 function renderNews() {
@@ -77,6 +87,7 @@ function renderNews() {
     grid.innerHTML = newsList.map(n => `
         <div class="col-md-4 mb-4">
             <div class="news-card">
+                ${currentUser && (currentUser.role === 'Admin') ? `<button class="btn btn-danger btn-delete" onclick="deleteNews(${n.id})">✖</button>` : ''}
                 <div class="card-title-overlay">${n.title}</div>
                 <img src="${n.img}">
                 <div class="p-3">
