@@ -12,11 +12,15 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#" onclick="showSection('home')">NETIVISHWAM <span class="text-primary">EPAPER</span></a>
+            <a class="navbar-brand fw-bold" href="index.html">NETIVISHWAM <span class="text-primary">EPAPER</span></a>
+            
             <div id="authLinks">
-                <button class="btn btn-outline-light btn-sm" onclick="openLogin()">Login</button>
+                <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    Login
+                </button>
             </div>
-            <div id="userLinks" class="d-none">
+
+            <div id="userLinks" class="d-none align-items-center">
                 <span id="userName" class="text-white me-2 small"></span>
                 <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
             </div>
@@ -25,55 +29,57 @@
 
     <div class="container mt-4">
         <div id="home-section">
-            <h4 class="mb-3">Latest News Articles</h4>
+            <h4 class="mb-3">Latest News</h4>
             <div class="row g-3" id="news-grid"></div>
-            
-            <h4 class="mt-5 mb-3">Today's E-Paper</h4>
-            <div id="epaper-viewer" class="position-relative border shadow-lg bg-white overflow-auto text-center" style="min-height: 500px;">
-                <canvas id="viewerCanvas"></canvas>
-            </div>
         </div>
 
-        <div id="upload-section" class="d-none">
-            <div class="card p-4">
-                <h3 id="panelTitle">Upload Content</h3>
+        <div id="upload-section" class="d-none mt-4">
+            <div class="card p-4 shadow-sm">
+                <h3 id="panelTitle">Admin Panel</h3>
                 <hr>
                 <div class="row">
                     <div class="col-md-6 border-end">
-                        <h5>Step 1: Upload & Crop Image</h5>
+                        <h5>Step 1: Upload Image</h5>
                         <input type="file" id="fileInput" class="form-control mb-2" accept="image/*">
-                        <div style="max-height: 400px; overflow: hidden;">
+                        <div style="height: 300px; background: #eee; overflow: hidden;">
                             <img id="cropImage" style="max-width: 100%;">
                         </div>
-                        <button class="btn btn-warning mt-2 btn-sm" onclick="startCrop()">Crop & Preview</button>
+                        <button class="btn btn-warning mt-2 w-100" onclick="startCrop()">Crop & Preview</button>
                     </div>
-                    
                     <div class="col-md-6">
-                        <h5>Step 2: Details & Mapping</h5>
-                        <input type="text" id="newsTitle" class="form-control mb-2" placeholder="Article Title">
+                        <h5>Step 2: Details</h5>
+                        <input type="text" id="newsTitle" class="form-control mb-2" placeholder="Title">
                         <select id="newsCat" class="form-select mb-2">
                             <option>Politics</option><option>Sports</option><option>Local</option>
                         </select>
-                        <p class="small text-muted">Note: Admin can map areas on the full E-paper page.</p>
-                        <button class="btn btn-primary w-100" onclick="saveNews()">Publish HD News</button>
+                        <button class="btn btn-primary w-100" onclick="saveNews()">Publish Now</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="loginModal" tabindex="-1">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content p-3">
-                <input type="text" id="user" class="form-control mb-2" placeholder="Username">
-                <input type="password" id="pass" class="form-control mb-2" placeholder="Password">
-                <button class="btn btn-primary w-100" onclick="handleLogin()">Login</button>
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Member Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <input type="text" id="user" class="form-control" placeholder="Username">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" id="pass" class="form-control" placeholder="Password">
+                    </div>
+                    <button class="btn btn-primary w-100" onclick="handleLogin()">Login</button>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
