@@ -3,41 +3,35 @@
     --sakshi-blue: #0d47a1;
 }
 
-body { background-color: #f4f4f4; margin: 0; font-family: 'Arial', sans-serif; }
+body { background: #f0f2f5; margin: 0; font-family: sans-serif; }
 
-/* Fixed Header */
-.epaper-header { background: var(--sakshi-yellow); padding: 10px; border-bottom: 4px solid var(--sakshi-blue); }
-.logo-text { font-size: 2.5rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
+.epaper-header { background: var(--sakshi-yellow); padding: 15px; border-bottom: 5px solid var(--sakshi-blue); text-align: center; }
+.logo-text { font-size: 2.8rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
 
-/* Professional Horizontal Toolbar */
+/* FIX: Horizontal Toolbar */
 .user-toolbar {
     background: white;
-    display: flex;
+    display: flex; 
     justify-content: center;
     gap: 40px;
-    padding: 10px;
+    padding: 12px;
     position: sticky;
     top: 0;
     z-index: 100;
 }
 
-.tool-item { cursor: pointer; text-align: center; font-weight: bold; font-size: 11px; color: #333; }
-.tool-item:hover { color: var(--sakshi-blue); }
-.icon { font-size: 20px; }
+.tool-item { text-align: center; cursor: pointer; font-size: 10px; font-weight: bold; color: #333; }
+.icon { font-size: 22px; display: block; margin-bottom: 2px; }
 
-/* Admin Controls */
-.admin-controls { background: #333; padding: 10px; text-align: center; display: flex; justify-content: center; gap: 10px; }
+.admin-panel { background: #333; padding: 10px; display: flex; justify-content: center; gap: 15px; }
 
-/* Main Paper View */
-.content-area { display: flex; justify-content: center; padding: 20px; background: #555; }
-.image-wrapper { position: relative; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
-#main-image { max-width: 100%; display: block; }
+.viewer-area { display: flex; justify-content: center; padding: 25px; background: #555; }
+.paper-wrapper { position: relative; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
+#epaper-img { max-width: 100%; display: block; }
 
-/* Mapped Area Styling */
+/* Admin News Zones */
 .news-zone {
     position: absolute;
     border: 1px dashed rgba(255,255,255,0.5);
     background: rgba(253, 216, 53, 0.1);
-    cursor: crosshair;
 }
-.news-zone:hover { background: rgba(253, 216, 53, 0.3); }
