@@ -1,7 +1,142 @@
-body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, sans-serif; }
-.navbar { background: #1a1a1a !important; }
-.img-container { min-height: 300px; border-radius: 8px; overflow: hidden; }
-.news-card { border: none; border-radius: 12px; transition: 0.3s; background: #fff; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-.news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-.news-card img { height: 200px; object-fit: cover; width: 100%; border-bottom: 2px solid #007bff; }
-.badge-cat { font-size: 0.7rem; padding: 4px 10px; border-radius: 4px; }
+/* General Styling */
+:root {
+    --primary: #007bff;
+    --dark: #1a1a1a;
+    --light-bg: #f4f6f9;
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar Tuning */
+.navbar {
+    background-color: var(--dark) !important;
+    padding: 12px 0;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+}
+
+/* Dashboard & Upload Section */
+#upload-section {
+    margin-top: 2rem;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-header {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+/* Cropper Container - Fixes the "Image Jumping" issue */
+.img-container {
+    width: 100%;
+    min-height: 400px;
+    max-height: 500px;
+    background-color: #e9ecef;
+    border: 2px dashed #adb5bd;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+#cropImage {
+    max-width: 100%;
+    display: block;
+}
+
+/* News Grid & Cards */
+.news-card {
+    border: none;
+    border-radius: 12px;
+    background: #fff;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Image below Title logic adjustment if needed */
+.news-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover; /* HD rendering maintain chestundi */
+    border-bottom: 4px solid var(--primary);
+}
+
+.card-body {
+    padding: 1.25rem;
+    flex-grow: 1;
+}
+
+.badge-cat {
+    background-color: var(--primary);
+    color: white;
+    font-size: 0.7rem;
+    padding: 5px 12px;
+    border-radius: 50px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.fw-bold {
+    color: #111;
+    line-height: 1.4;
+}
+
+/* Buttons */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-wa {
+    background-color: #25D366;
+    color: white;
+    font-weight: 600;
+}
+
+.btn-wa:hover {
+    background-color: #1eb956;
+    color: white;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .img-container {
+        min-height: 250px;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .col-md-7.border-end {
+        border-end: none !important;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+}
