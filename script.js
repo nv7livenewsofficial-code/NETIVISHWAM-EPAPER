@@ -1,83 +1,82 @@
 let newsCropper;
-let isAdminMode = false;
-let mapCount = 0;
+let isAuthorized = false;
+let mappedItems = 0;
 
-// Admin Login
-function showLoginPrompt() {
-    const userEmail = prompt("Enter Gmail ID:");
-    const userPass = prompt("Enter Password:");
+// Admin Authentication
+function adminAuth() {
+    const user = prompt("Enter Admin Gmail:");
+    const pass = prompt("Enter Password:");
     
     // Spelling check for 'gmail.com'
-    if ((userEmail === "hannu@gmail.com" || userEmail === "masoodv6.in@gmail.com") && 
-        (userPass === "6301505699" || userPass === "hannu6301505699")) {
-        isAdminMode = true;
+    if ((user === "hannu@gmail.com" || user === "masoodv6.in@gmail.com") && 
+        (pass === "6301505699" || pass === "hannu6301505699")) {
+        isAuthorized = true;
         document.getElementById('admin-panel').classList.remove('d-none');
-        alert("Admin Access: Mapping Tool Enabled.");
+        alert("Admin Mode: Area Mapping Enabled.");
     } else {
-        alert("Standard User: Restricted to Crop and Share.");
+        alert("Standard User Access: Viewing only.");
     }
 }
 
-// Logic for Mapping 10 News Items
-function initiateAreaMapping() {
-    if (!isAdminMode) return;
-    alert("Click on the image to define 10 news areas.");
-    const imgEl = document.getElementById('epaper-image');
+// Mapping Logic for 10 News Items
+function startNewsMapping() {
+    if (!isAuthorized) return;
+    alert("Click on the image to define 10 news regions.");
+    const paperImg = document.getElementById('main-epaper-image');
     
-    imgEl.onclick = (event) => {
-        if (mapCount >= 10) return alert("Reached limit of 10 mapped items.");
+    paperImg.onclick = function(e) {
+        if (mappedItems >= 10) return alert("10 areas mapped successfully.");
         
-        const rect = imgEl.getBoundingClientRect();
-        const posX = ((event.clientX - rect.left) / rect.width) * 100;
-        const posY = ((event.clientY - rect.top) / rect.height) * 100;
+        const rect = paperImg.getBoundingClientRect();
+        const xPos = ((e.clientX - rect.left) / rect.width) * 100;
+        const yPos = ((e.clientY - rect.top) / rect.height) * 100;
         
-        const zoneDiv = document.createElement('div');
-        zoneDiv.className = "mapped-zone";
-        zoneDiv.style.left = posX + "%";
-        zoneDiv.style.top = posY + "%";
-        zoneDiv.style.width = "25%"; // Default zone size
-        zoneDiv.style.height = "12%";
+        const zone = document.createElement('div');
+        zone.className = "news-area-zone";
+        zone.style.left = xPos + "%";
+        zone.style.top = yPos + "%";
+        zone.style.width = "25%"; // Approximate news block width
+        zone.style.height = "12%"; // Approximate news block height
         
-        document.getElementById('mapping-layer').appendChild(zoneDiv);
-        mapCount++;
+        document.getElementById('mapping-overlay').appendChild(zone);
+        mappedItems++;
     };
 }
 
-// User Actions: Crop and HD Download
+// User Actions: Crop & HD Save
 function toggleCropTool() {
-    const paperImg = document.getElementById('epaper-image');
+    const img = document.getElementById('main-epaper-image');
     if (newsCropper) {
         newsCropper.destroy();
         newsCropper = null;
     } else {
-        newsCropper = new Cropper(paperImg, { viewMode: 1, autoCropArea: 0.3 });
+        newsCropper = new Cropper(img, { viewMode: 1, autoCropArea: 0.2 });
     }
 }
 
-function downloadHDClip() {
-    if (!newsCropper) return alert("Please select a news area first!");
+function downloadHD() {
+    if (!newsCropper) return alert("Select a news clip using CROP first!");
     
-    // Maintain HD resolution
-    const croppedCanvas = newsCropper.getCroppedCanvas({
-        width: 1600,
+    const canvas = newsCropper.getCroppedCanvas({
+        width: 1600, // HD Quality
         imageSmoothingQuality: 'high'
     });
     
     const downloadLink = document.createElement('a');
     downloadLink.download = 'Netivishwam-News-HD.jpg';
-    downloadLink.href = croppedCanvas.toDataURL('image/jpeg', 1.0);
+    downloadLink.href = canvas.toDataURL('image/jpeg', 1.0);
     downloadLink.click();
 }
 
-// WhatsApp Sharing
+// WhatsApp Share
 function shareToWhatsApp() {
-    const newsUrl = "nv7news.blogspot.com";
-    const shareText = encodeURIComponent("Check out this news from Netivishwam: " + newsUrl);
-    window.open(`https://api.whatsapp.com/send?text=${shareText}`, '_blank');
+    const newsLink = "nv7news.blogspot.com";
+    const msg = encodeURIComponent("Check out this news on Netivishwam: " + newsLink);
+    window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
 }
 
-let reactionCount = 0;
-function handleReaction() {
-    reactionCount++;
-    document.getElementById('count-likes').innerText = reactionCount;
+let likes = 0;
+function handleLike() {
+    likes++;
+    document.getElementById('count-display').innerText = likes;
 }
