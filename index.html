@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NETIVISHWAM EPAPER</title>
+    <title>NETIVISHWAM EPAPER - Professional</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="epaper-header text-center">
+    <header class="epaper-header">
         <h1 class="logo-text">నేటివిశ్వం</h1>
     </header>
 
     <div class="user-toolbar shadow-sm">
-        <div class="tool-item" onclick="initCrop()">
+        <div class="tool-item" onclick="activateCrop()">
             <span class="icon">✂️</span><br>CROP
         </div>
-        <div class="tool-item" onclick="downloadHD()">
+        <div class="tool-item" onclick="saveHD()">
             <span class="icon">💾</span><br>SAVE HD
         </div>
-        <div class="tool-item" onclick="shareWA()">
+        <div class="tool-item" onclick="shareToWA()">
             <span class="icon">📲</span><br>SHARE
         </div>
-        <div class="tool-item" onclick="react('like')">
+        <div class="tool-item" onclick="addReaction()">
             <span class="icon">👍</span><br><span id="l-count">0</span>
         </div>
     </div>
 
-    <div id="admin-panel" class="admin-controls d-none">
-        <button class="btn btn-sm btn-warning" onclick="document.getElementById('fileInput').click()">Upload Page</button>
-        <button class="btn btn-sm btn-light" onclick="startMapping()">Map 10 News Areas</button>
+    <div id="admin-bar" class="admin-panel d-none">
+        <button class="btn btn-warning btn-sm fw-bold" onclick="document.getElementById('fileInput').click()">UPLOAD PAGE</button>
+        <button class="btn btn-light btn-sm fw-bold" onclick="startMapping()">MAP 10 NEWS AREAS</button>
         <input type="file" id="fileInput" class="d-none" accept="image/*">
     </div>
 
-    <main class="content-area">
-        <div class="image-wrapper" id="wrapper">
-            <img id="main-image" src="placeholder.jpg" alt="Epaper Page">
+    <main class="viewer-area">
+        <div class="paper-wrapper" id="wrapper">
+            <img id="epaper-img" src="placeholder.jpg">
             <div id="map-layer"></div>
         </div>
     </main>
 
     <div class="text-center p-3">
-        <button class="btn btn-link btn-sm text-muted" onclick="adminLogin()">Admin Access</button>
+        <button class="btn btn-sm text-secondary border-0 bg-transparent" onclick="loginCheck()">Admin Login</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
