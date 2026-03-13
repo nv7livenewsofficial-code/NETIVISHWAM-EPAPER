@@ -1,19 +1,20 @@
 :root {
-    --sakshi-yellow: #fdd835;
-    --sakshi-blue: #0d47a1;
+    --brand-yellow: #fdd835;
+    --brand-blue: #0d47a1;
 }
 
-body { background: #f8f9fa; margin: 0; font-family: 'Segoe UI', sans-serif; }
+body { background-color: #f4f6f9; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
-.main-header { background: var(--sakshi-yellow); padding: 12px; border-bottom: 5px solid var(--sakshi-blue); text-align: center; }
-.logo { font-size: 2.5rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
+/* Fixed Branding */
+.brand-header { background: var(--brand-yellow); padding: 12px; border-bottom: 5px solid var(--brand-blue); }
+.telugu-logo { color: var(--brand-blue); font-weight: 900; font-size: 2.5rem; margin: 0; }
 
-/* Horizontal Toolbar Fix */
-.user-toolbar {
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    gap: 35px;
+/* FIX: Horizontal Alignment for Toolbar */
+.user-interaction-bar {
+    background: #ffffff;
+    display: flex; /* Aligns items in a row */
+    justify-content: center; /* Centers items horizontally */
+    gap: 40px; /* Space between icons */
     padding: 10px 0;
     position: sticky;
     top: 0;
@@ -21,21 +22,22 @@ body { background: #f8f9fa; margin: 0; font-family: 'Segoe UI', sans-serif; }
     border-bottom: 1px solid #ddd;
 }
 
-.tool-action { cursor: pointer; text-align: center; font-size: 10px; font-weight: bold; color: #333; transition: 0.2s; }
-.tool-action:hover { color: var(--sakshi-blue); }
-.btn-icon { font-size: 22px; display: block; margin-bottom: 3px; }
+.nav-tool { cursor: pointer; text-align: center; font-size: 10px; font-weight: bold; color: #444; }
+.nav-tool:hover { color: var(--brand-blue); }
+.tool-emoji { font-size: 20px; display: block; margin-bottom: 2px; }
 
-/* Admin Strip Styling */
-.admin-strip { background: #343a40; padding: 10px; display: flex; justify-content: center; align-items: center; }
+/* Admin Control Bar */
+.admin-strip { background: #333; padding: 12px; color: white; }
 
-/* Paper View Styling */
-.paper-container { display: flex; justify-content: center; padding: 20px; background: #6c757d; min-height: 80vh; }
-.image-box { position: relative; background: #fff; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-#epaper-image { max-width: 100%; display: block; }
+/* Viewer Styling */
+.e-paper-viewer { display: flex; justify-content: center; padding: 25px; background: #5a5a5a; min-height: 80vh; }
+.image-box-wrapper { position: relative; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+#main-epaper-image { max-width: 100%; display: block; }
 
-/* Transparent zones for 10 news items */
-.mapped-zone {
+/* Mapping Overlay for 10 News Items */
+.news-area-zone {
     position: absolute;
-    border: 1px dashed rgba(255, 255, 255, 0.4);
-    background: rgba(253, 216, 53, 0.05);
+    border: 1px dashed rgba(255,255,255,0.4);
+    background: rgba(253, 216, 53, 0.1);
+    cursor: crosshair;
 }
