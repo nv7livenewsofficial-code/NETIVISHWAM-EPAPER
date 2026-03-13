@@ -1,83 +1,68 @@
 let cropper;
 let isAdmin = false;
-let mappedCount = 0;
+let count = 0;
 
-// 1. Admin Login Logic (Fixing the gamil typo)
-function adminLogin() {
-    const email = prompt("Enter Admin Email:");
-    const pass = prompt("Enter Password:");
+// Admin Login
+function loginCheck() {
+    const email = prompt("Gmail ID:");
+    const pass = prompt("Password:");
     
-    // Check credentials
+    // Spelling fixed to gmail.com
     if ((email === "hannu@gmail.com" || email === "masoodv6.in@gmail.com") && 
         (pass === "6301505699" || pass === "hannu6301505699")) {
         isAdmin = true;
-        document.getElementById('admin-panel').classList.remove('d-none');
-        alert("Admin Mode Active: You can now Map 10 News Areas.");
-    } else {
-        alert("User Mode: Access Restricted to Crop/Share.");
+        document.getElementById('admin-bar').classList.remove('d-none');
+        alert("Admin Mode On: Map 10 items now.");
     }
 }
 
-// 2. Admin Mapping Logic (Select 10 news items)
+// 10 News Area Mapping (Admin)
 function startMapping() {
     if(!isAdmin) return;
-    alert("Click on the image to map 10 news areas.");
-    const img = document.getElementById('main-image');
-    
-    img.onclick = function(e) {
-        if (mappedCount >= 10) return alert("10 areas already mapped!");
-        
+    alert("Click on 10 news items to map them.");
+    const img = document.getElementById('epaper-img');
+    img.onclick = (e) => {
+        if(count >= 10) return alert("Mapping Complete (10 Items).");
         const rect = img.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
         
-        createArea(x, y);
-        mappedCount++;
+        const zone = document.createElement('div');
+        zone.className = "news-zone";
+        zone.style.left = x + "%";
+        zone.style.top = y + "%";
+        zone.style.width = "25%"; // Standard width
+        zone.style.height = "12%"; // Standard height
+        document.getElementById('map-layer').appendChild(zone);
+        count++;
     };
 }
 
-function createArea(x, y) {
-    const zone = document.createElement('div');
-    zone.className = 'news-zone';
-    zone.style.left = x + '%';
-    zone.style.top = y + '%';
-    zone.style.width = '25%'; // Fixed width for news block
-    zone.style.height = '15%'; // Fixed height for news block
-    document.getElementById('map-layer').appendChild(zone);
-}
-
-// 3. User Crop Logic
-function initCrop() {
-    const image = document.getElementById('main-image');
+// User Action: HD Crop
+function activateCrop() {
+    const image = document.getElementById('epaper-img');
     if (cropper) cropper.destroy();
-    cropper = new Cropper(image, { viewMode: 1 });
+    cropper = new Cropper(image, { viewMode: 1, autoCropArea: 0.3 });
 }
 
-// 4. HD Download Logic
-function downloadHD() {
-    if (!cropper) return alert("Please select an area using CROP first!");
-    
-    const canvas = cropper.getCroppedCanvas({
-        width: 1600, // HD Width
-        imageSmoothingQuality: 'high'
-    });
-    
+function saveHD() {
+    if (!cropper) return alert("Select area first!");
+    const canvas = cropper.getCroppedCanvas({ width: 1600 }); // High Quality
     const link = document.createElement('a');
-    link.download = 'Netivishwam-News-HD.jpg';
+    link.download = 'Netivishwam-HD.jpg';
     link.href = canvas.toDataURL('image/jpeg', 1.0);
     link.click();
 }
 
-// 5. WhatsApp Sharing
-function shareWA() {
-    const url = "https://nv7news.blogspot.com";
-    const text = encodeURIComponent("Check out this news on Netivishwam: " + url);
+// Share Logic
+function shareToWA() {
+    const blog = "nv7news.blogspot.com";
+    const text = encodeURIComponent("Check Netivishwam Epaper: " + blog);
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 }
 
-// Like functionality
 let likes = 0;
-function react(type) {
-    if(type === 'like') likes++;
+function addReaction() {
+    likes++;
     document.getElementById('l-count').innerText = likes;
 }
