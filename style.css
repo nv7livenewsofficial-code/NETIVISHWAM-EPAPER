@@ -3,41 +3,40 @@
     --brand-blue: #0d47a1;
 }
 
-body { background-color: #f4f6f9; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #f0f2f5; margin: 0; font-family: 'Segoe UI', sans-serif; }
 
-/* Fixed Branding */
-.brand-header { background: var(--brand-yellow); padding: 12px; border-bottom: 5px solid var(--brand-blue); }
-.telugu-logo { color: var(--brand-blue); font-weight: 900; font-size: 2.5rem; margin: 0; }
+/* Header Styling */
+.epaper-header { background: var(--brand-yellow); padding: 15px; border-bottom: 5px solid var(--brand-blue); }
+.logo-text { color: var(--brand-blue); font-weight: 900; font-size: 2.5rem; margin: 0; }
 
-/* FIX: Horizontal Alignment for Toolbar */
-.user-interaction-bar {
+/* FIX: Horizontal Toolbar alignment */
+.user-toolbar {
     background: #ffffff;
-    display: flex; /* Aligns items in a row */
-    justify-content: center; /* Centers items horizontally */
-    gap: 40px; /* Space between icons */
-    padding: 10px 0;
+    display: flex; /* Makes tools horizontal */
+    justify-content: center; /* Centers the toolbar */
+    gap: 40px; /* Space between items */
+    padding: 12px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
     border-bottom: 1px solid #ddd;
 }
 
-.nav-tool { cursor: pointer; text-align: center; font-size: 10px; font-weight: bold; color: #444; }
-.nav-tool:hover { color: var(--brand-blue); }
-.tool-emoji { font-size: 20px; display: block; margin-bottom: 2px; }
+.tool-item { cursor: pointer; text-align: center; font-size: 11px; font-weight: bold; color: #333; }
+.icon { font-size: 22px; display: block; margin-bottom: 3px; }
 
-/* Admin Control Bar */
-.admin-strip { background: #333; padding: 12px; color: white; }
+/* Admin Controls Styling */
+.admin-controls { background: #2c3e50; padding: 10px; display: flex; justify-content: center; gap: 15px; }
 
-/* Viewer Styling */
-.e-paper-viewer { display: flex; justify-content: center; padding: 25px; background: #5a5a5a; min-height: 80vh; }
-.image-box-wrapper { position: relative; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-#main-epaper-image { max-width: 100%; display: block; }
+/* Main Paper Display */
+.viewer-container { display: flex; justify-content: center; padding: 25px; background: #555; min-height: 80vh; }
+.paper-wrapper { position: relative; background: #fff; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
+#epaper-image { max-width: 100%; display: block; }
 
-/* Mapping Overlay for 10 News Items */
-.news-area-zone {
+/* Visual Markers for Mapped News */
+.mapped-box {
     position: absolute;
-    border: 1px dashed rgba(255,255,255,0.4);
+    border: 1px dashed rgba(255, 255, 255, 0.5);
     background: rgba(253, 216, 53, 0.1);
-    cursor: crosshair;
+    cursor: pointer;
 }
