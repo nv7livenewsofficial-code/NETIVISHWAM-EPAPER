@@ -1,59 +1,83 @@
-let isMapping = false;
-let mappedAreas = []; // To store 10 news coordinates
+let cropper;
+let isAdmin = false;
+let mappedCount = 0;
 
-// 1. Role Check (Using your credentials)
-function handleLogin() {
-    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-    const pass = document.getElementById('loginPass').value.trim();
+// 1. Admin Login Logic (Fixing the gamil typo)
+function adminLogin() {
+    const email = prompt("Enter Admin Email:");
+    const pass = prompt("Enter Password:");
     
-    // Fixed typo from 'gamil' to 'gmail'
-    if ((email === "hannu@gmail.com" && pass === "6301505699") || 
-        (email === "masoodv6.in@gmail.com" && pass === "hannu6301505699")) {
-        
+    // Check credentials
+    if ((email === "hannu@gmail.com" || email === "masoodv6.in@gmail.com") && 
+        (pass === "6301505699" || pass === "hannu6301505699")) {
+        isAdmin = true;
         document.getElementById('admin-panel').classList.remove('d-none');
-        document.getElementById('admin-name').innerText = email.split('@')[0];
-        alert("Admin Access Granted");
+        alert("Admin Mode Active: You can now Map 10 News Areas.");
     } else {
-        alert("User Mode: Access Restricted to View/Crop only.");
+        alert("User Mode: Access Restricted to Crop/Share.");
     }
 }
 
-// 2. Area Mapping Logic (Admin only)
+// 2. Admin Mapping Logic (Select 10 news items)
 function startMapping() {
-    isMapping = true;
-    alert("Click on the image to mark news areas (Approx 10 items)");
-    // Logic to capture X, Y coordinates on click
+    if(!isAdmin) return;
+    alert("Click on the image to map 10 news areas.");
+    const img = document.getElementById('main-image');
+    
+    img.onclick = function(e) {
+        if (mappedCount >= 10) return alert("10 areas already mapped!");
+        
+        const rect = img.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        
+        createArea(x, y);
+        mappedCount++;
+    };
 }
 
-// 3. HD Crop & Download (For User)
+function createArea(x, y) {
+    const zone = document.createElement('div');
+    zone.className = 'news-zone';
+    zone.style.left = x + '%';
+    zone.style.top = y + '%';
+    zone.style.width = '25%'; // Fixed width for news block
+    zone.style.height = '15%'; // Fixed height for news block
+    document.getElementById('map-layer').appendChild(zone);
+}
+
+// 3. User Crop Logic
+function initCrop() {
+    const image = document.getElementById('main-image');
+    if (cropper) cropper.destroy();
+    cropper = new Cropper(image, { viewMode: 1 });
+}
+
+// 4. HD Download Logic
 function downloadHD() {
-    if (!cropper) return alert("Select area first!");
+    if (!cropper) return alert("Please select an area using CROP first!");
     
-    // Capture in high quality
     const canvas = cropper.getCroppedCanvas({
-        width: 1600, // HD Quality
+        width: 1600, // HD Width
         imageSmoothingQuality: 'high'
     });
     
     const link = document.createElement('a');
-    link.download = 'Netivishwam-News.jpg';
+    link.download = 'Netivishwam-News-HD.jpg';
     link.href = canvas.toDataURL('image/jpeg', 1.0);
     link.click();
 }
 
-// 4. Like/Dislike Counter
-let likes = 0;
-function react(type) {
-    if (type === 'like') {
-        likes++;
-        document.getElementById('like-count').innerText = likes;
-    }
-    // Update to database logic can be added here
+// 5. WhatsApp Sharing
+function shareWA() {
+    const url = "https://nv7news.blogspot.com";
+    const text = encodeURIComponent("Check out this news on Netivishwam: " + url);
+    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
 }
 
-// 5. Sharing Logic
-function shareToWA() {
-    const domain = "nv7news.blogspot.com";
-    const text = encodeURIComponent(`Read this news on Netivishwam: ${domain}`);
-    window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+// Like functionality
+let likes = 0;
+function react(type) {
+    if(type === 'like') likes++;
+    document.getElementById('l-count').innerText = likes;
 }
