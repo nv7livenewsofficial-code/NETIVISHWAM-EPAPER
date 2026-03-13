@@ -1,69 +1,118 @@
-/* Netivishwam Premium Theme */
+/* Netivishwam Premium CSS - Fixed Version */
+
 :root {
-    --primary-gold: #ffcc00;
-    --news-red: #d32f2f;
-    --dark-overlay: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
-    --card-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    --gold: #ffcc00;
+    --dark: #121212;
+    --red: #d32f2f;
+    --white: #ffffff;
 }
 
-body { 
-    background-color: #eef2f3; 
-    font-family: 'Segoe UI', Arial, sans-serif; 
+body {
+    background-color: #f4f7f6;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* Navbar Color */
-.navbar { 
-    background: #000 !important; 
-    border-bottom: 3px solid var(--primary-gold);
+/* Navbar Tuning */
+.navbar {
+    background-color: var(--dark) !important;
+    border-bottom: 3px solid var(--gold);
+    padding: 15px 0;
 }
 
-/* News Card Style */
-.news-card { 
-    position: relative; 
-    background: #fff; 
-    border-radius: 15px; 
-    overflow: hidden; 
-    box-shadow: var(--card-shadow);
-    border: 1px solid #ddd;
+.navbar-brand {
+    font-size: 1.5rem;
+    color: var(--gold) !important;
+    letter-spacing: 1px;
 }
 
-/* TITLE OVERLAY - Ikkada colour fix chesham */
-.card-title-overlay { 
-    background: var(--dark-overlay); 
-    color: var(--primary-gold); /* Title Gold Colour lo untundi, chala baguntundi */
-    padding: 15px; 
-    font-weight: 800; 
-    font-size: 1.2rem;
-    line-height: 1.4;
-    position: relative;
-    z-index: 2;
-    text-transform: capitalize;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+/* Dashboard Section */
+#upload-section {
+    margin-bottom: 40px;
 }
 
-/* Image Quality */
-.news-card img { 
-    width: 100%; 
-    height: 280px; 
-    object-fit: cover; 
-    display: block;
-    filter: brightness(0.9); /* Image koncham dark unte Title baga kanipistundi */
+.card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-/* Category Badge */
-.badge-cat { 
-    background-color: var(--news-red) !important;
-    font-size: 0.8rem; 
-    padding: 6px 12px; 
-    border-radius: 4px; 
-    font-weight: bold;
-}
-
-/* Admin Panel Styling */
 .card-header {
-    background: #1a237e !important; /* Deep Blue for Admin */
+    background: #1a237e !important;
     color: white;
     font-weight: bold;
+}
+
+/* HD Cropper Container Fix */
+.img-container {
+    width: 100%;
+    min-height: 400px;
+    background-color: #e0e0e0;
+    border: 2px dashed #999;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#cropImage {
+    max-width: 100%;
+    display: block;
+}
+
+/* NEWS CARD DESIGN - Fixed Title and Image Layout */
+.news-card {
+    position: relative;
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TITLE OVERLAY - Image paina bright ga kanipistundi */
+.card-title-overlay {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 100%);
+    color: var(--gold);
+    padding: 15px;
+    font-weight: 800;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    z-index: 5;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+    border-bottom: 2px solid var(--gold);
+}
+
+.news-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.news-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Post Details */
+.card-body-content {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.badge-cat {
+    background-color: var(--red) !important;
+    color: white;
+    font-weight: bold;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
 }
 
 /* WhatsApp Button */
@@ -71,17 +120,27 @@ body {
     background-color: #25D366 !important;
     border: none;
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.85rem;
     padding: 10px;
+    transition: 0.3s;
 }
 
 .btn-success:hover {
     background-color: #128C7E !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* Mobile Adjustments */
-@media (max-width: 600px) {
-    .card-title-overlay { font-size: 1.1rem; padding: 12px; }
-    .news-card img { height: 220px; }
+@media (max-width: 768px) {
+    .img-container {
+        min-height: 250px;
+    }
+    
+    .card-title-overlay {
+        font-size: 1.1rem;
+        padding: 10px;
+    }
+
+    .news-card img {
+        height: 220px;
+    }
 }
