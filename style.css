@@ -1,42 +1,115 @@
+/* Netivishwam Global Variables */
 :root {
     --brand-yellow: #fdd835;
     --brand-blue: #0d47a1;
+    --bg-dark: #333333;
 }
 
-body { background-color: #f0f2f5; margin: 0; font-family: 'Segoe UI', sans-serif; }
+/* Reset for all browsers */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-/* Header Styling */
-.epaper-header { background: var(--brand-yellow); padding: 15px; border-bottom: 5px solid var(--brand-blue); }
-.logo-text { color: var(--brand-blue); font-weight: 900; font-size: 2.5rem; margin: 0; }
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    overflow-x: hidden;
+}
 
-/* FIX: Horizontal Toolbar alignment */
+/* Branding Header */
+.epaper-header {
+    background-color: var(--brand-yellow);
+    padding: 15px;
+    border-bottom: 5px solid var(--brand-blue);
+    text-align: center;
+}
+
+.logo-text {
+    color: var(--brand-blue);
+    font-weight: 900;
+    font-size: 2.5rem;
+}
+
+/* HORIZONTAL TOOLBAR FIX */
+/* This solves the vertical list problem in your screenshot */
 .user-toolbar {
     background: #ffffff;
-    display: flex; /* Makes tools horizontal */
-    justify-content: center; /* Centers the toolbar */
-    gap: 40px; /* Space between items */
+    display: flex; /* Forces horizontal layout */
+    justify-content: center; /* Centers icons */
+    gap: 30px; /* Space between icons */
     padding: 12px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dee2e6;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.tool-item { cursor: pointer; text-align: center; font-size: 11px; font-weight: bold; color: #333; }
-.icon { font-size: 22px; display: block; margin-bottom: 3px; }
+.tool-item {
+    cursor: pointer;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: #495057;
+    transition: 0.3s;
+    min-width: 60px;
+}
 
-/* Admin Controls Styling */
-.admin-controls { background: #2c3e50; padding: 10px; display: flex; justify-content: center; gap: 15px; }
+.tool-item:hover {
+    color: var(--brand-blue);
+}
 
-/* Main Paper Display */
-.viewer-container { display: flex; justify-content: center; padding: 25px; background: #555; min-height: 80vh; }
-.paper-wrapper { position: relative; background: #fff; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
-#epaper-image { max-width: 100%; display: block; }
+.icon-box {
+    font-size: 22px;
+    display: block;
+    margin-bottom: 4px;
+}
 
-/* Visual Markers for Mapped News */
-.mapped-box {
+/* Admin Panel Styling */
+.admin-controls {
+    background-color: var(--bg-dark);
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Viewer Container */
+.main-viewer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #555555; /* Contrast for the paper */
+    min-height: 80vh;
+}
+
+.paper-shadow-box {
+    position: relative;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 100%;
+}
+
+#epaper-image {
+    max-width: 100%;
+    display: block;
+}
+
+/* Mapping Layers for 10 News Items */
+.news-map-zone {
     position: absolute;
     border: 1px dashed rgba(255, 255, 255, 0.5);
     background: rgba(253, 216, 53, 0.1);
-    cursor: pointer;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .user-toolbar {
+        gap: 15px;
+    }
+    .logo-text {
+        font-size: 1.8rem;
+    }
 }
