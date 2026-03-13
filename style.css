@@ -1,56 +1,110 @@
+/* NETIVISHWAM SAKSHI MODEL CSS */
 :root {
     --sakshi-yellow: #fdd835;
     --sakshi-blue: #0d47a1;
-    --dark: #212121;
+    --bg-gray: #f8f9fa;
+    --border-color: #dee2e6;
 }
 
-body { background-color: #ffffff; font-family: 'Segoe UI', sans-serif; }
+body {
+    background-color: var(--bg-gray);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+}
 
-.epaper-header { background-color: var(--sakshi-yellow); border-bottom: 4px solid var(--sakshi-blue); }
-.logo-text { font-size: 2.5rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
-.edition-title { color: var(--sakshi-blue); font-weight: bold; margin: 0; }
+/* Header & Navbar */
+.epaper-header {
+    background-color: var(--sakshi-yellow);
+    border-bottom: 5px solid var(--sakshi-blue);
+    text-align: center;
+}
 
-.img-container { width: 100%; min-height: 400px; overflow: hidden; }
+.logo-text {
+    font-size: 2.8rem;
+    color: var(--sakshi-blue);
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -1px;
+}
 
-/* Sakshi Style Card */
-.news-card {
-    border: 1px solid #ddd;
-    padding: 8px;
+.edition-title {
+    color: var(--sakshi-blue);
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+/* Cropper Section */
+.img-container {
+    width: 100%;
+    min-height: 400px;
     background: #fff;
-    transition: 0.3s;
-    position: relative;
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Edition Grid - Thumbnail Styling */
+.news-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    height: 100%;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--sakshi-yellow);
 }
 
 .news-card img {
     width: 100%;
-    height: 380px; /* Long vertical thumbnails */
+    height: auto;
+    aspect-ratio: 3 / 4; /* Professional e-paper ratio */
     object-fit: cover;
     border: 1px solid #eee;
+    margin-bottom: 10px;
 }
 
+/* Yellow Label - Title Below Image */
 .card-title-bar {
     background-color: var(--sakshi-yellow);
     color: var(--sakshi-blue);
-    text-align: center;
-    padding: 8px;
+    padding: 8px 5px;
     font-weight: bold;
-    font-size: 1rem;
-    margin-top: 8px;
+    font-size: 0.95rem;
+    border-radius: 3px;
+    text-transform: uppercase;
 }
 
+/* Admin Delete Button */
 .btn-delete {
     position: absolute;
     top: 15px;
     right: 15px;
-    background: rgba(211, 47, 47, 0.9);
+    z-index: 10;
+    background-color: rgba(220, 53, 69, 0.9);
     color: white;
     border: none;
     border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    font-size: 12px;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
 }
 
-@media (max-width: 600px) {
-    .news-card img { height: 300px; }
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .logo-text { font-size: 2rem; }
+    .news-card { padding: 5px; }
+    .card-title-bar { font-size: 0.8rem; padding: 5px 2px; }
 }
