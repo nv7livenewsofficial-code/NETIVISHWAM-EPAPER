@@ -3,35 +3,39 @@
     --sakshi-blue: #0d47a1;
 }
 
-body { background: #f0f2f5; margin: 0; font-family: sans-serif; }
+body { background: #f8f9fa; margin: 0; font-family: 'Segoe UI', sans-serif; }
 
-.epaper-header { background: var(--sakshi-yellow); padding: 15px; border-bottom: 5px solid var(--sakshi-blue); text-align: center; }
-.logo-text { font-size: 2.8rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
+.main-header { background: var(--sakshi-yellow); padding: 12px; border-bottom: 5px solid var(--sakshi-blue); text-align: center; }
+.logo { font-size: 2.5rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
 
-/* FIX: Horizontal Toolbar */
+/* Horizontal Toolbar Fix */
 .user-toolbar {
-    background: white;
-    display: flex; 
+    background: #fff;
+    display: flex;
     justify-content: center;
-    gap: 40px;
-    padding: 12px;
+    gap: 35px;
+    padding: 10px 0;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
+    border-bottom: 1px solid #ddd;
 }
 
-.tool-item { text-align: center; cursor: pointer; font-size: 10px; font-weight: bold; color: #333; }
-.icon { font-size: 22px; display: block; margin-bottom: 2px; }
+.tool-action { cursor: pointer; text-align: center; font-size: 10px; font-weight: bold; color: #333; transition: 0.2s; }
+.tool-action:hover { color: var(--sakshi-blue); }
+.btn-icon { font-size: 22px; display: block; margin-bottom: 3px; }
 
-.admin-panel { background: #333; padding: 10px; display: flex; justify-content: center; gap: 15px; }
+/* Admin Strip Styling */
+.admin-strip { background: #343a40; padding: 10px; display: flex; justify-content: center; align-items: center; }
 
-.viewer-area { display: flex; justify-content: center; padding: 25px; background: #555; }
-.paper-wrapper { position: relative; background: white; box-shadow: 0 0 30px rgba(0,0,0,0.6); }
-#epaper-img { max-width: 100%; display: block; }
+/* Paper View Styling */
+.paper-container { display: flex; justify-content: center; padding: 20px; background: #6c757d; min-height: 80vh; }
+.image-box { position: relative; background: #fff; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
+#epaper-image { max-width: 100%; display: block; }
 
-/* Admin News Zones */
-.news-zone {
+/* Transparent zones for 10 news items */
+.mapped-zone {
     position: absolute;
-    border: 1px dashed rgba(255,255,255,0.5);
-    background: rgba(253, 216, 53, 0.1);
+    border: 1px dashed rgba(255, 255, 255, 0.4);
+    background: rgba(253, 216, 53, 0.05);
 }
