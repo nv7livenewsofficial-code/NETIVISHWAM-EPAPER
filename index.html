@@ -1,30 +1,52 @@
-<div id="user-tools" class="tool-bar shadow-sm">
-    <div class="tool-item" onclick="toggleCropMode()">
-        <span class="tool-icon">✂️</span><span>CROP</span>
-    </div>
-    <div class="tool-item" onclick="downloadHD()">
-        <span class="tool-icon">💾</span><span>SAVE HD</span>
-    </div>
-    <div class="tool-item" onclick="shareToWA()">
-        <span class="tool-icon">📲</span><span>SHARE</span>
-    </div>
-    <div class="tool-item" onclick="react('like')">
-        <span class="tool-icon">👍</span><span id="like-count">0</span>
-    </div>
-    <div class="tool-item" onclick="react('dislike')">
-        <span class="tool-icon">👎</span><span id="dislike-count">0</span>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NETIVISHWAM EPAPER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-<div id="admin-panel" class="d-none bg-dark text-white p-3">
-    <h6>Admin Control: <span id="admin-name"></span></h6>
-    <button class="btn btn-warning btn-sm" onclick="showUploadModal()">Upload New Page</button>
-    <button class="btn btn-info btn-sm" onclick="startMapping()">Map News Areas (10 Items)</button>
-</div>
+    <header class="epaper-header text-center">
+        <h1 class="logo-text">నేటివిశ్వం</h1>
+    </header>
 
-<div class="epaper-display text-center">
-    <div id="image-wrapper" style="position: relative; display: inline-block;">
-        <img id="active-page" src="default.jpg" class="img-fluid">
-        <div id="mapping-layer"></div>
+    <div class="user-toolbar shadow-sm">
+        <div class="tool-item" onclick="initCrop()">
+            <span class="icon">✂️</span><br>CROP
+        </div>
+        <div class="tool-item" onclick="downloadHD()">
+            <span class="icon">💾</span><br>SAVE HD
+        </div>
+        <div class="tool-item" onclick="shareWA()">
+            <span class="icon">📲</span><br>SHARE
+        </div>
+        <div class="tool-item" onclick="react('like')">
+            <span class="icon">👍</span><br><span id="l-count">0</span>
+        </div>
     </div>
-</div>
+
+    <div id="admin-panel" class="admin-controls d-none">
+        <button class="btn btn-sm btn-warning" onclick="document.getElementById('fileInput').click()">Upload Page</button>
+        <button class="btn btn-sm btn-light" onclick="startMapping()">Map 10 News Areas</button>
+        <input type="file" id="fileInput" class="d-none" accept="image/*">
+    </div>
+
+    <main class="content-area">
+        <div class="image-wrapper" id="wrapper">
+            <img id="main-image" src="placeholder.jpg" alt="Epaper Page">
+            <div id="map-layer"></div>
+        </div>
+    </main>
+
+    <div class="text-center p-3">
+        <button class="btn btn-link btn-sm text-muted" onclick="adminLogin()">Admin Access</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
