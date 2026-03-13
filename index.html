@@ -10,70 +10,71 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">NETIVISHWAM <span class="text-primary">EPAPER</span></a>
+            <a class="navbar-brand fw-bold" href="#" onclick="location.reload()">NETIVISHWAM <span class="text-primary">EPAPER</span></a>
             
             <div id="authLinks">
-                <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">
-                    Login
-                </button>
+                <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
             </div>
 
             <div id="userLinks" class="d-none align-items-center">
-                <span id="userName" class="text-white me-2 small"></span>
+                <span id="userNameDisplay" class="text-white me-3 small fw-bold"></span>
                 <button class="btn btn-danger btn-sm" onclick="logout()">Logout</button>
             </div>
         </div>
     </nav>
 
     <div class="container mt-4">
-        <div id="home-section">
-            <h4 class="mb-3">Latest News</h4>
-            <div class="row g-3" id="news-grid"></div>
-        </div>
-
-        <div id="upload-section" class="d-none mt-4">
-            <div class="card p-4 shadow-sm">
-                <h3 id="panelTitle">Admin Panel</h3>
-                <hr>
-                <div class="row">
-                    <div class="col-md-6 border-end">
-                        <h5>Step 1: Upload Image</h5>
-                        <input type="file" id="fileInput" class="form-control mb-2" accept="image/*">
-                        <div style="height: 300px; background: #eee; overflow: hidden;">
-                            <img id="cropImage" style="max-width: 100%;">
+        <div id="upload-section" class="d-none mb-5">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0" id="panelTitle">Dashboard</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-7 border-end">
+                            <h6>1. Upload & Crop (HD)</h6>
+                            <input type="file" id="fileInput" class="form-control mb-3" accept="image/*">
+                            <div class="img-container bg-light border text-center">
+                                <img id="cropImage" style="max-width: 100%; display: block;">
+                            </div>
+                            <button class="btn btn-warning mt-3 w-100 fw-bold" onclick="startCrop()">Crop & Preview</button>
                         </div>
-                        <button class="btn btn-warning mt-2 w-100" onclick="startCrop()">Crop & Preview</button>
-                    </div>
-                    <div class="col-md-6">
-                        <h5>Step 2: Details</h5>
-                        <input type="text" id="newsTitle" class="form-control mb-2" placeholder="Title">
-                        <select id="newsCat" class="form-select mb-2">
-                            <option>Politics</option><option>Sports</option><option>Local</option>
-                        </select>
-                        <button class="btn btn-primary w-100" onclick="saveNews()">Publish Now</button>
+                        <div class="col-md-5">
+                            <h6>2. Post Details</h6>
+                            <input type="text" id="newsTitle" class="form-control mb-3" placeholder="Enter News Title">
+                            <select id="newsCat" class="form-select mb-3">
+                                <option>Politics</option>
+                                <option>Sports</option>
+                                <option>Local News</option>
+                                <option>Jobs</option>
+                            </select>
+                            <button class="btn btn-success w-100 py-2 fw-bold" onclick="saveNews()">Publish News</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div id="home-section">
+            <h4 class="mb-4 border-bottom pb-2">Latest News</h4>
+            <div class="row g-4" id="news-grid">
+                </div>
+        </div>
     </div>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
                 <div class="modal-header">
-                    <h5 class="modal-title">Member Login</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title fw-bold">Sign In</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <input type="text" id="user" class="form-control" placeholder="Username">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" id="pass" class="form-control" placeholder="Password">
-                    </div>
-                    <button class="btn btn-primary w-100" onclick="handleLogin()">Login</button>
+                    <input type="email" id="loginEmail" class="form-control mb-3" placeholder="Gmail ID">
+                    <input type="password" id="loginPass" class="form-control mb-3" placeholder="Password">
+                    <button class="btn btn-primary w-100 fw-bold" onclick="handleLogin()">Login</button>
                 </div>
             </div>
         </div>
