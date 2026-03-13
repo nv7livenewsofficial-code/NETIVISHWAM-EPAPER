@@ -1,36 +1,87 @@
-body { background-color: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+/* Netivishwam Premium Theme */
+:root {
+    --primary-gold: #ffcc00;
+    --news-red: #d32f2f;
+    --dark-overlay: linear-gradient(to bottom, rgba(0,0,0,0.95), rgba(0,0,0,0.7));
+    --card-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
 
-/* News Card Layout */
-.news-card {
+body { 
+    background-color: #eef2f3; 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+}
+
+/* Navbar Color */
+.navbar { 
+    background: #000 !important; 
+    border-bottom: 3px solid var(--primary-gold);
+}
+
+/* News Card Style */
+.news-card { 
+    position: relative; 
+    background: #fff; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    box-shadow: var(--card-shadow);
+    border: 1px solid #ddd;
+}
+
+/* TITLE OVERLAY - Ikkada colour fix chesham */
+.card-title-overlay { 
+    background: var(--dark-overlay); 
+    color: var(--primary-gold); /* Title Gold Colour lo untundi, chala baguntundi */
+    padding: 15px; 
+    font-weight: 800; 
+    font-size: 1.2rem;
+    line-height: 1.4;
     position: relative;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-    height: 100%;
+    z-index: 2;
+    text-transform: capitalize;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
 }
 
-/* Title Above Image Overlay */
-.card-title-overlay {
-    background: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    padding: 10px;
-    font-weight: bold;
-    font-size: 1rem;
-    width: 100%;
-    z-index: 10;
-}
-
-.news-card img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
+/* Image Quality */
+.news-card img { 
+    width: 100%; 
+    height: 280px; 
+    object-fit: cover; 
     display: block;
+    filter: brightness(0.9); /* Image koncham dark unte Title baga kanipistundi */
 }
 
-.img-container {
-    min-height: 400px;
-    background: #ddd;
-    border-radius: 8px;
+/* Category Badge */
+.badge-cat { 
+    background-color: var(--news-red) !important;
+    font-size: 0.8rem; 
+    padding: 6px 12px; 
+    border-radius: 4px; 
+    font-weight: bold;
 }
 
-#panelTitle { font-weight: 800; color: #fff; }
+/* Admin Panel Styling */
+.card-header {
+    background: #1a237e !important; /* Deep Blue for Admin */
+    color: white;
+    font-weight: bold;
+}
+
+/* WhatsApp Button */
+.btn-success {
+    background-color: #25D366 !important;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 10px;
+}
+
+.btn-success:hover {
+    background-color: #128C7E !important;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .card-title-overlay { font-size: 1.1rem; padding: 12px; }
+    .news-card img { height: 220px; }
+}
