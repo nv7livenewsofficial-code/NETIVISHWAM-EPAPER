@@ -10,12 +10,14 @@
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">🏠 NETIVISHWAM</a>
+            <a class="navbar-brand fw-bold" href="#" onclick="location.reload()">
+                🏠 <span style="color: #ffcc00;">NETIVISHWAM</span>
+            </a>
             
             <div id="authLinks">
-                <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                <button class="btn btn-outline-warning btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
             </div>
 
             <div id="userLinks" class="d-none align-items-center">
@@ -28,24 +30,24 @@
 
     <div class="container mt-4">
         <div id="upload-section" class="d-none mb-5">
-            <div class="card shadow border-0">
-                <div class="card-header bg-primary text-white d-flex justify-content-between">
-                    <h5 class="mb-0">Publish News</h5>
-                    <button class="btn btn-light btn-sm" onclick="location.reload()">Close Panel</button>
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-warning d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 fw-bold">CREATE NEWS POST</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-7 border-end">
+                            <label class="fw-bold mb-2">1. Image Upload</label>
                             <input type="file" id="fileInput" class="form-control mb-3" accept="image/*">
-                            <div class="img-container bg-light border"><img id="cropImage" style="max-width: 100%;"></div>
+                            <div class="img-container bg-light border"><img id="cropImage"></div>
                             <button class="btn btn-warning mt-3 w-100 fw-bold" onclick="startCrop()">Apply HD Crop</button>
                         </div>
                         <div class="col-md-5">
-                            <input type="text" id="newsTitle" class="form-control mb-3" placeholder="Enter News Title">
-                            <select id="newsCat" class="form-select mb-3">
-                                <option>Politics</option><option>Sports</option><option>Local</option>
-                            </select>
-                            <button class="btn btn-success w-100 py-2 fw-bold" onclick="saveNews()">Publish Now</button>
+                            <label class="fw-bold mb-2">2. Details</label>
+                            <input type="text" id="newsTitle" class="form-control mb-3" placeholder="Enter News Headline">
+                            <label class="small fw-bold">Select Category</label>
+                            <select id="newsCat" class="form-select mb-3"></select>
+                            <button class="btn btn-success w-100 py-3 fw-bold" onclick="saveNews()">PUBLISH NOW</button>
                         </div>
                     </div>
                 </div>
@@ -53,7 +55,7 @@
         </div>
 
         <div id="home-section">
-            <h4 class="mb-4">Latest News</h4>
+            <h4 class="fw-bold mb-4 border-bottom pb-2">Latest News</h4>
             <div class="row g-4" id="news-grid"></div>
         </div>
     </div>
@@ -61,16 +63,14 @@
     <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content shadow-lg border-0">
-                <div class="modal-header">
-                    <h5 class="modal-title fw-bold">Member Sign In</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title fw-bold">Sign In</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body text-start">
-                    <label class="small fw-bold">Gmail ID</label>
-                    <input type="email" id="loginEmail" class="form-control mb-3" placeholder="masoodv6.in@gmail.com">
-                    <label class="small fw-bold">Password</label>
+                <div class="modal-body p-4">
+                    <input type="email" id="loginEmail" class="form-control mb-3" placeholder="Gmail ID">
                     <input type="password" id="loginPass" class="form-control mb-3" placeholder="Password">
-                    <button class="btn btn-primary w-100 fw-bold" onclick="handleLogin()">Login</button>
+                    <button class="btn btn-dark w-100 fw-bold" onclick="handleLogin()">Login</button>
                 </div>
             </div>
         </div>
