@@ -1,0 +1,8 @@
+body { background: #f0f2f5; }
+.news-card { border: none; border-radius: 10px; overflow: hidden; background: #fff; }
+.news-card img { width: 100%; height: 200px; object-fit: cover; }
+#epaper-viewer canvas { max-width: 100%; height: auto !important; }
+.share-box { margin-top: 10px; display: flex; gap: 10px; }
+.share-btn { padding: 5px 10px; border-radius: 5px; color: white; text-decoration: none; font-size: 12px; }
+.wa { background: #25D366; }
+.fb { background: #1877F2; }
