@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NETIVISHWAM EPAPER - Professional</title>
+    <title>NETIVISHWAM EPAPER</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="epaper-header">
-        <h1 class="logo-text">నేటివిశ్వం</h1>
+    <header class="main-header">
+        <h1 class="logo">నేటివిశ్వం</h1>
     </header>
 
     <div class="user-toolbar shadow-sm">
-        <div class="tool-item" onclick="activateCrop()">
-            <span class="icon">✂️</span><br>CROP
+        <div class="tool-action" onclick="toggleCropTool()">
+            <span class="btn-icon">✂️</span><br>CROP
         </div>
-        <div class="tool-item" onclick="saveHD()">
-            <span class="icon">💾</span><br>SAVE HD
+        <div class="tool-action" onclick="downloadHDClip()">
+            <span class="btn-icon">💾</span><br>SAVE HD
         </div>
-        <div class="tool-item" onclick="shareToWA()">
-            <span class="icon">📲</span><br>SHARE
+        <div class="tool-action" onclick="shareToWhatsApp()">
+            <span class="btn-icon">📲</span><br>SHARE
         </div>
-        <div class="tool-item" onclick="addReaction()">
-            <span class="icon">👍</span><br><span id="l-count">0</span>
+        <div class="tool-action" onclick="handleReaction()">
+            <span class="btn-icon">👍</span><br><span id="count-likes">0</span>
         </div>
     </div>
 
-    <div id="admin-bar" class="admin-panel d-none">
-        <button class="btn btn-warning btn-sm fw-bold" onclick="document.getElementById('fileInput').click()">UPLOAD PAGE</button>
-        <button class="btn btn-light btn-sm fw-bold" onclick="startMapping()">MAP 10 NEWS AREAS</button>
-        <input type="file" id="fileInput" class="d-none" accept="image/*">
+    <div id="admin-panel" class="admin-strip d-none">
+        <button class="btn btn-warning btn-sm mx-2" onclick="triggerUpload()">Upload Edition</button>
+        <button class="btn btn-light btn-sm" onclick="initiateAreaMapping()">Map 10 News Items</button>
+        <input type="file" id="fileSelector" class="d-none" accept="image/*">
     </div>
 
-    <main class="viewer-area">
-        <div class="paper-wrapper" id="wrapper">
-            <img id="epaper-img" src="placeholder.jpg">
-            <div id="map-layer"></div>
+    <div class="paper-container">
+        <div class="image-box" id="image-wrapper">
+            <img id="epaper-image" src="placeholder.jpg">
+            <div id="mapping-layer"></div>
         </div>
-    </main>
+    </div>
 
-    <div class="text-center p-3">
-        <button class="btn btn-sm text-secondary border-0 bg-transparent" onclick="loginCheck()">Admin Login</button>
+    <div class="footer-section">
+        <button class="btn btn-sm btn-outline-secondary border-0" onclick="showLoginPrompt()">Admin Login</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
