@@ -2,18 +2,16 @@ let cropper;
 let currentUser = null;
 let newsList = JSON.parse(localStorage.getItem('neti_hd_news')) || [];
 
-// 1. AUTHORIZED USER LIST
+// 1. UPDATED AUTHORIZED USER LIST
 const users = {
     "hannu@gmail.com": { role: "Admin", pass: "hannu6301505699" },
-    "reporter@gmail.com": { role: "Reporter", pass: "nv7livenews" },
-    "user@gmail.com": { role: "User", pass: "user123" }
+    "masoodv6.in@gmail.com": { role: "Admin", pass: "hannu6301505699" }, // Mee ID add cheshanu
+    "reporter@gmail.com": { role: "Reporter", pass: "nv7livenews" }
 };
 
-// 2. AUTH LOGIC
 function handleLogin() {
     const email = document.getElementById('loginEmail').value.trim().toLowerCase();
     const pass = document.getElementById('loginPass').value.trim();
-
     const foundUser = users[email];
 
     if (foundUser && foundUser.pass === pass) {
@@ -25,27 +23,18 @@ function handleLogin() {
 
 function processLogin(role, email) {
     currentUser = { role, email };
-    
-    // UI Setup
     document.getElementById('userLinks').classList.replace('d-none', 'd-flex');
     document.getElementById('authLinks').classList.add('d-none');
-    document.getElementById('userNameDisplay').innerText = `${role} (${email})`;
+    document.getElementById('userNameDisplay').innerText = `${role}`;
 
-    // Panel Visibility Logic
     if (role === "Admin" || role === "Reporter") {
         document.getElementById('upload-section').classList.remove('d-none');
-        document.getElementById('panelTitle').innerText = role + " Dashboard";
-    } else {
-        document.getElementById('upload-section').classList.add('d-none');
-        alert("Welcome User! Meeru news chadavachu.");
     }
-
-    // Modal Hide
     const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
     if(modal) modal.hide();
 }
 
-// 3. IMAGE CROPPING (HD)
+// 2. IMAGE HANDLING
 document.getElementById('fileInput').onchange = function(e) {
     const reader = new FileReader();
     reader.onload = function(event) {
@@ -60,16 +49,15 @@ document.getElementById('fileInput').onchange = function(e) {
 };
 
 function startCrop() {
-    if (!cropper) return alert("Select an image first!");
-    const canvas = cropper.getCroppedCanvas({ width: 1200 }); // High Quality
+    if (!cropper) return alert("Select image!");
+    const canvas = cropper.getCroppedCanvas({ width: 1200 });
     window.tempImg = canvas.toDataURL('image/jpeg', 0.9);
-    alert("Image Cropped! Fill details and Publish.");
+    alert("HD Image Ready!");
 }
 
-// 4. PUBLISH NEWS
 function saveNews() {
     const title = document.getElementById('newsTitle').value;
-    if (!window.tempImg || !title) return alert("Title and Cropped Image are required!");
+    if (!window.tempImg || !title) return alert("Title & Crop are required!");
 
     const article = {
         id: Date.now(),
@@ -77,49 +65,32 @@ function saveNews() {
         cat: document.getElementById('newsCat').value,
         img: window.tempImg,
         author: currentUser.role,
-        email: currentUser.email,
         date: new Date().toLocaleDateString()
     };
 
     newsList.unshift(article);
     localStorage.setItem('neti_hd_news', JSON.stringify(newsList));
-    
-    document.getElementById('newsTitle').value = "";
-    window.tempImg = null;
-    
     renderNews();
-    alert("Published Successfully!");
+    alert("Published!");
 }
 
-// 5. RENDER NEWS
 function renderNews() {
     const grid = document.getElementById('news-grid');
     if (!grid) return;
-
-    if (newsList.length === 0) {
-        grid.innerHTML = '<p class="text-center text-muted">No news available.</p>';
-        return;
-    }
-
     grid.innerHTML = newsList.map(n => `
         <div class="col-md-4">
-            <div class="news-card">
+            <div class="news-card shadow-sm">
+                <div class="card-title-overlay">${n.title}</div>
                 <img src="${n.img}">
                 <div class="p-3">
-                    <span class="badge bg-primary badge-cat mb-2">${n.cat}</span>
-                    <h6 class="fw-bold">${n.title}</h6>
-                    <p class="small text-muted mb-3">By ${n.author} (${n.email})</p>
-                    <div class="d-flex gap-2">
-                        <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(n.title)}" target="_blank" class="btn btn-success btn-sm flex-grow-1">Share</a>
-                    </div>
+                    <span class="badge bg-primary mb-2">${n.cat}</span>
+                    <p class="small text-muted mb-0">Published: ${n.date}</p>
+                    <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(n.title)}" target="_blank" class="btn btn-success btn-sm w-100 mt-2">WhatsApp Share</a>
                 </div>
             </div>
         </div>
     `).join('');
 }
 
-function logout() {
-    location.reload();
-}
-
+function logout() { location.reload(); }
 window.onload = renderNews;
