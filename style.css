@@ -1,144 +1,43 @@
-/* Netivishwam Global Styles */
 :root {
     --sakshi-yellow: #fdd835;
     --sakshi-blue: #0d47a1;
-    --user-green: #25D366;
-    --admin-red: #d32f2f;
-    --bg-gray: #f0f2f5;
 }
 
-body {
-    background-color: var(--bg-gray);
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    margin: 0;
-    overflow-x: hidden;
-}
+body { background-color: #f4f4f4; margin: 0; font-family: 'Arial', sans-serif; }
 
-/* 1. Header & Branding */
-.epaper-header {
-    background-color: var(--sakshi-yellow);
-    border-bottom: 5px solid var(--sakshi-blue);
-    padding: 10px 0;
-    text-align: center;
-}
+/* Fixed Header */
+.epaper-header { background: var(--sakshi-yellow); padding: 10px; border-bottom: 4px solid var(--sakshi-blue); }
+.logo-text { font-size: 2.5rem; color: var(--sakshi-blue); font-weight: 900; margin: 0; }
 
-.logo-text {
-    font-size: 2.8rem;
-    color: var(--sakshi-blue);
-    font-weight: 900;
-    margin: 0;
-}
-
-/* 2. User Tool Bar (As seen in Capture FRO2.JPG) */
-/* User ki idi mathrame kanapadali */
+/* Professional Horizontal Toolbar */
 .user-toolbar {
-    background: #ffffff;
+    background: white;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
+    justify-content: center;
+    gap: 40px;
+    padding: 10px;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 100;
 }
 
-.tool-item {
-    cursor: pointer;
-    text-align: center;
-    flex: 1;
-    transition: 0.2s;
-    color: #444;
-}
+.tool-item { cursor: pointer; text-align: center; font-weight: bold; font-size: 11px; color: #333; }
+.tool-item:hover { color: var(--sakshi-blue); }
+.icon { font-size: 20px; }
 
-.tool-item:hover {
-    color: var(--sakshi-blue);
-}
+/* Admin Controls */
+.admin-controls { background: #333; padding: 10px; text-align: center; display: flex; justify-content: center; gap: 10px; }
 
-.tool-icon {
-    font-size: 1.4rem;
-    display: block;
-}
+/* Main Paper View */
+.content-area { display: flex; justify-content: center; padding: 20px; background: #555; }
+.image-wrapper { position: relative; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+#main-image { max-width: 100%; display: block; }
 
-.tool-label {
-    font-size: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* 3. Admin Control Panel (Hidden by default) */
-.admin-panel {
-    background: #212121;
-    color: #fff;
-    padding: 12px;
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: center;
-}
-
-.btn-admin {
-    padding: 6px 15px;
-    font-size: 13px;
-    font-weight: bold;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-upload { background-color: var(--sakshi-yellow); color: var(--sakshi-blue); }
-.btn-delete { background-color: var(--admin-red); color: white; }
-
-/* 4. Main E-paper Display */
-.display-container {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    background: #555; /* Dark background to highlight the paper */
-}
-
-.paper-wrapper {
-    position: relative;
-    background: white;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    max-width: 1000px;
-    width: 100%;
-}
-
-#active-page {
-    width: 100%;
-    display: block;
-}
-
-/* 5. Area Mapping Visuals (Admin only) */
-.mapped-zone {
+/* Mapped Area Styling */
+.news-zone {
     position: absolute;
-    border: 2px dashed rgba(253, 216, 53, 0.6);
+    border: 1px dashed rgba(255,255,255,0.5);
     background: rgba(253, 216, 53, 0.1);
     cursor: crosshair;
 }
-
-.mapped-zone:hover {
-    background: rgba(253, 216, 53, 0.3);
-}
-
-/* 6. Reactions (Like/Dislike) */
-.reaction-box {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 5px;
-}
-
-.count-badge {
-    font-size: 12px;
-    background: #eee;
-    padding: 2px 6px;
-    border-radius: 10px;
-}
-
-/* Mobile Adjustments */
-@media (max-width: 768px) {
-    .logo-text { font-size: 2rem; }
-    .tool-label { font-size: 8px; }
-}
+.news-zone:hover { background: rgba(253, 216, 53, 0.3); }
