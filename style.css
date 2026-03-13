@@ -1,24 +1,16 @@
-/* Netivishwam Global Variables */
 :root {
     --brand-yellow: #fdd835;
     --brand-blue: #0d47a1;
-    --bg-dark: #333333;
-}
-
-/* Reset for all browsers */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 body {
-    background-color: #f8f9fa;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    overflow-x: hidden;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
 }
 
-/* Branding Header */
+/* Header Branding */
 .epaper-header {
     background-color: var(--brand-yellow);
     padding: 15px;
@@ -29,87 +21,69 @@ body {
 .logo-text {
     color: var(--brand-blue);
     font-weight: 900;
-    font-size: 2.5rem;
+    font-size: 2.4rem;
+    margin: 0;
 }
 
-/* HORIZONTAL TOOLBAR FIX */
-/* This solves the vertical list problem in your screenshot */
+/* HORIZONTAL TOOLBAR FIX: This prevents the vertical list in your screenshot */
 .user-toolbar {
     background: #ffffff;
-    display: flex; /* Forces horizontal layout */
-    justify-content: center; /* Centers icons */
-    gap: 30px; /* Space between icons */
-    padding: 12px 0;
+    display: flex; /* Key fix for horizontal alignment */
+    justify-content: center;
+    gap: 40px;
+    padding: 10px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid #dee2e6;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-bottom: 1px solid #ddd;
 }
 
-.tool-item {
+.tool-action {
     cursor: pointer;
     text-align: center;
     font-size: 11px;
     font-weight: bold;
-    color: #495057;
-    transition: 0.3s;
-    min-width: 60px;
+    color: #333;
 }
 
-.tool-item:hover {
-    color: var(--brand-blue);
-}
-
-.icon-box {
+.icon {
     font-size: 22px;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
-/* Admin Panel Styling */
-.admin-controls {
-    background-color: var(--bg-dark);
-    padding: 10px;
+/* Admin Bar Styling */
+.admin-bar {
+    background: #222;
+    padding: 12px;
     display: flex;
     justify-content: center;
     gap: 15px;
 }
 
-/* Viewer Container */
+/* Image Viewer Area */
 .main-viewer {
     display: flex;
     justify-content: center;
-    padding: 20px;
-    background-color: #555555; /* Contrast for the paper */
+    padding: 25px;
+    background: #555;
     min-height: 80vh;
 }
 
-.paper-shadow-box {
+.canvas-box {
     position: relative;
     background: white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    max-width: 100%;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
 }
 
-#epaper-image {
+#paper-img {
     max-width: 100%;
     display: block;
 }
 
-/* Mapping Layers for 10 News Items */
-.news-map-zone {
+/* News Areas Mapping boxes */
+.news-zone {
     position: absolute;
-    border: 1px dashed rgba(255, 255, 255, 0.5);
+    border: 1px dashed rgba(255, 255, 255, 0.4);
     background: rgba(253, 216, 53, 0.1);
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-    .user-toolbar {
-        gap: 15px;
-    }
-    .logo-text {
-        font-size: 1.8rem;
-    }
 }
