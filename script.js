@@ -1,82 +1,83 @@
 let newsCropper;
-let isAuthorized = false;
-let mappedItems = 0;
+let isAdmin = false;
+let mappedCount = 0;
 
-// Admin Authentication
-function adminAuth() {
-    const user = prompt("Enter Admin Gmail:");
-    const pass = prompt("Enter Password:");
+// Admin Login Logic
+function adminLogin() {
+    const user = prompt("Admin Email:");
+    const pass = prompt("Password:");
     
-    // Spelling check for 'gmail.com'
+    // Validate Credentials
     if ((user === "hannu@gmail.com" || user === "masoodv6.in@gmail.com") && 
         (pass === "6301505699" || pass === "hannu6301505699")) {
-        isAuthorized = true;
+        isAdmin = true;
         document.getElementById('admin-panel').classList.remove('d-none');
-        alert("Admin Mode: Area Mapping Enabled.");
+        alert("Admin Mode: News Area Mapping Enabled.");
     } else {
-        alert("Standard User Access: Viewing only.");
+        alert("User Access Only.");
     }
 }
 
-// Mapping Logic for 10 News Items
-function startNewsMapping() {
-    if (!isAuthorized) return;
-    alert("Click on the image to define 10 news regions.");
-    const paperImg = document.getElementById('main-epaper-image');
+// Logic to Map 10 News Items
+function initMapping() {
+    if (!isAdmin) return;
+    alert("Click on the page to define 10 news areas.");
+    const img = document.getElementById('epaper-image');
     
-    paperImg.onclick = function(e) {
-        if (mappedItems >= 10) return alert("10 areas mapped successfully.");
+    img.onclick = (e) => {
+        if (mappedCount >= 10) return alert("10 News Items Mapped.");
         
-        const rect = paperImg.getBoundingClientRect();
-        const xPos = ((e.clientX - rect.left) / rect.width) * 100;
-        const yPos = ((e.clientY - rect.top) / rect.height) * 100;
+        const rect = img.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
         
-        const zone = document.createElement('div');
-        zone.className = "news-area-zone";
-        zone.style.left = xPos + "%";
-        zone.style.top = yPos + "%";
-        zone.style.width = "25%"; // Approximate news block width
-        zone.style.height = "12%"; // Approximate news block height
+        const box = document.createElement('div');
+        box.className = "mapped-box";
+        box.style.left = x + "%";
+        box.style.top = y + "%";
+        box.style.width = "25%"; // Standard news width
+        box.style.height = "12%"; // Standard news height
         
-        document.getElementById('mapping-overlay').appendChild(zone);
-        mappedItems++;
+        document.getElementById('mapping-layer').appendChild(box);
+        mappedCount++;
     };
 }
 
-// User Actions: Crop & HD Save
-function toggleCropTool() {
-    const img = document.getElementById('main-epaper-image');
+// User Action: HD Cropping
+function startCrop() {
+    const image = document.getElementById('epaper-image');
     if (newsCropper) {
         newsCropper.destroy();
         newsCropper = null;
     } else {
-        newsCropper = new Cropper(img, { viewMode: 1, autoCropArea: 0.2 });
+        newsCropper = new Cropper(image, { viewMode: 1, autoCropArea: 0.2 });
     }
 }
 
 function downloadHD() {
-    if (!newsCropper) return alert("Select a news clip using CROP first!");
+    if (!newsCropper) return alert("Select a news area first!");
     
+    // Export in HD Resolution
     const canvas = newsCropper.getCroppedCanvas({
-        width: 1600, // HD Quality
+        width: 1600,
         imageSmoothingQuality: 'high'
     });
     
-    const downloadLink = document.createElement('a');
-    downloadLink.download = 'Netivishwam-News-HD.jpg';
-    downloadLink.href = canvas.toDataURL('image/jpeg', 1.0);
-    downloadLink.click();
+    const link = document.createElement('a');
+    link.download = 'Netivishwam-News-HD.jpg';
+    link.href = canvas.toDataURL('image/jpeg', 1.0);
+    link.click();
 }
 
 // WhatsApp Share
-function shareToWhatsApp() {
-    const newsLink = "nv7news.blogspot.com";
-    const msg = encodeURIComponent("Check out this news on Netivishwam: " + newsLink);
+function shareWhatsApp() {
+    const domain = "nv7news.blogspot.com";
+    const msg = encodeURIComponent("Read Netivishwam News: " + domain);
     window.open(`https://api.whatsapp.com/send?text=${msg}`, '_blank');
 }
 
 let likes = 0;
-function handleLike() {
+function likePost() {
     likes++;
-    document.getElementById('count-display').innerText = likes;
+    document.getElementById('like-count').innerText = likes;
 }
